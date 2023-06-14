@@ -10,7 +10,7 @@ using System;
 public class UI_TrainCardsInfo : MonoBehaviour
 {
     [SerializeField]
-    public TrainCard_SO TC_Ui;
+    public TrainCard_SO TrainCard;
 
 
     [SerializeField]
@@ -20,7 +20,7 @@ public class UI_TrainCardsInfo : MonoBehaviour
     public void Update()
     {
         
-        image.sprite = TC_Ui.sprite;
+        image.sprite = TrainCard.sprite;
     }
 
     public void LogMessage(string message)

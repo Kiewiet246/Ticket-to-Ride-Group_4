@@ -21,6 +21,11 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     public List<PlayerHand> players;
 
+    [SerializeField]
+    private Transform OpenMarket;
+
+    public TrainCard_SO cardsInMarket;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -55,4 +60,30 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public void PickUp_MarketCard()
+    {
+        
+       
+
+        
+
+        for (int i= 0; i < cardManager.openMarket.Count; i++)
+            
+            
+        {
+            cardsInMarket = cardManager.openMarket[i];
+
+
+            if (cardsInMarket.ClickedInMarket == true)
+            {
+               // cardsInMarket.ClickedInMarket = false;
+                cardManager.openMarket.Remove(cardsInMarket);
+                CurrentPlayer.TrainCardsInHand.Add(cardsInMarket);
+                
+
+                cardManager.RefillMarket();
+                
+            }
+        }
+    }
 }

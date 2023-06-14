@@ -40,7 +40,14 @@ public class CardManager : MonoBehaviour
     [SerializeField]
     public List<DestinationCards_SO> DestCardsDeck;
 
-   
+    private GameObject Test;
+   // [SerializeField]
+    // MarketCardClickable cardClickable;
+    [SerializeField]
+    private GameManager gameManager_CardM;
+
+    private List<GameObject> PrefabList = new List<GameObject>();
+
 
     private void Awake()
     {
@@ -58,21 +65,28 @@ public class CardManager : MonoBehaviour
 
     }
 
+    public void Update()
+    {
+        
+    }
+
     public void CreateDeck()
     {
         DeckofTrainCards = new List<TrainCard_SO>();
       
-        foreach (TrainCard_SO test in TrainCards_So)
+        foreach (TrainCard_SO TrainCard in TrainCards_So)
         {
            for (int i = 0; i < 12; i++)
             {
-                DeckofTrainCards.Add(test);
+                DeckofTrainCards.Add(TrainCard);
+                TrainCard.ClickedInMarket = false;
             }
         }
 
         for (int i = 0; i < 14; i++)
         {
             DeckofTrainCards.Add(LocomotiveCard);
+            LocomotiveCard.ClickedInMarket = false;
         }
 
       
@@ -128,22 +142,40 @@ public class CardManager : MonoBehaviour
     {
         openMarket = new List<TrainCard_SO>();
         
-        for (int i = 0; i < 5; i++)
+        for (int i =0; i< 5; i++)
         {
             TrainCard_SO topCard = DeckofTrainCards[0];
             DeckofTrainCards.Remove(topCard);
             openMarket.Add(topCard);
-            Debug.Log("Hier");
-            Prefab_TC_UI.GetComponent<UI_TrainCardsInfo>().TC_Ui = topCard;
+            Prefab_TC_UI.GetComponent<UI_TrainCardsInfo>().TrainCard = topCard;
+            Test = Prefab_TC_UI;
+            Test = Instantiate(Prefab_TC_UI, OMparent);
+            Test.AddComponent<MarketCardClickable>();
+            Test.GetComponent<MarketCardClickable>().gameManager_Clickable = gameManager_CardM;
 
-          
-           Instantiate(Prefab_TC_UI, OMparent);
-          
-
+            // Prefab_TC_UI.GetComponent<UI_TrainCardsInfo>().TrainCard = topCard;
         }
+       
+        CheckingMarket();
+    }
+
+
+    public void RefillMarket()
+    {
+        TrainCard_SO topCard = DeckofTrainCards[0];
+        DeckofTrainCards.Remove(topCard);
+        openMarket.Add(topCard);
+
+        Prefab_TC_UI.GetComponent<UI_TrainCardsInfo>().TrainCard = topCard;
+        Test = Prefab_TC_UI;
+        Test = Instantiate(Prefab_TC_UI, OMparent);
+        Test.AddComponent<MarketCardClickable>();
+        Test.GetComponent<MarketCardClickable>().gameManager_Clickable = gameManager_CardM;
 
         CheckingMarket();
     }
+
+    
 
   
     
@@ -154,9 +186,9 @@ public class CardManager : MonoBehaviour
         {
            if (openCard == LocomotiveCard)
             {
-                Debug.Log("jip");
+               
                 CountLoco += 1;
-                Debug.Log(CountLoco + "Counting");
+                
                 
             }
 
@@ -168,8 +200,8 @@ public class CardManager : MonoBehaviour
             ClearingOpenMarket();
             
             CountLoco = 0;
-           
-            ShuffleTrainCards();
+
+            Debug.Log("Restock");
             OpenMarket();
         }
         

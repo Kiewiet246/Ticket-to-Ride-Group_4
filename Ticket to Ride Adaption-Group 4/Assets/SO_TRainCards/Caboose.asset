@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CardName: Caboose
   sprite: {fileID: -2939567874258020215, guid: bdefaabfdaee1f04ebacd43d3f324ed5, type: 3}
+  ClickedInMarket: 0

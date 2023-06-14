@@ -479,6 +479,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ccc567a950938fc41a5fc89971893a43, type: 2}
   - {fileID: 11400000, guid: 42faea49877144b41a5260173800d7e7, type: 2}
   - {fileID: 11400000, guid: b37b3ea11cd5f514d8cba1c22f5dfe20, type: 2}
+  gameManager_CardM: {fileID: 1010799330}
 --- !u!4 &424935175
 Transform:
   m_ObjectHideFlags: 0
@@ -846,6 +847,7 @@ MonoBehaviour:
   cardManager: {fileID: 424935174}
   CurrentPlayerNumber: 0
   players: []
+  OpenMarket: {fileID: 423007209}
 --- !u!4 &1010799331
 Transform:
   m_ObjectHideFlags: 0
