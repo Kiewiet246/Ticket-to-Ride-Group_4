@@ -16,13 +16,13 @@ public class CardManager : MonoBehaviour
    
     
     [SerializeField]
-    List<TrainCard_SO> DeckofTrainCards;
+    public List<TrainCard_SO> DeckofTrainCards;
     [SerializeField]
     List<TrainCard_SO> Discardpile_TrainCards;
 
 
     [SerializeField]
-    List<TrainCard_SO> openMarket;
+    public List<TrainCard_SO> openMarket;
 
     private int CountLoco =0;
 
@@ -33,17 +33,20 @@ public class CardManager : MonoBehaviour
     private TrainCard_SO TCFORUi;
 
     [SerializeField]
-    PlayerHand PlayerOne;
+    public PlayerHand PlayerOne;
     [SerializeField]
-    PlayerHand PlayerTwo;
+    public PlayerHand PlayerTwo;
 
     [SerializeField]
-    List<DestinationCards_SO> DestCardsDeck;
-    
+    public List<DestinationCards_SO> DestCardsDeck;
 
+   
 
     private void Awake()
     {
+        
+        
+
         CreateDeck();
         ShuffleTrainCards();
         DealCardsTrainCards();
@@ -98,22 +101,22 @@ public class CardManager : MonoBehaviour
 
     private void DealCardsTrainCards()
     {
-        PlayerOne.CardsInHand = new List<TrainCard_SO>();
+        PlayerOne.TrainCardsInHand = new List<TrainCard_SO>();
 
         for (int i = 0; i < 4; i++)
         {
             TrainCard_SO topCard = DeckofTrainCards[0];
             DeckofTrainCards.Remove(topCard);
-            PlayerOne.CardsInHand.Add(topCard);
+            PlayerOne.TrainCardsInHand.Add(topCard);
         }
 
-        PlayerTwo.CardsInHand = new List<TrainCard_SO>();
+        PlayerTwo.TrainCardsInHand = new List<TrainCard_SO>();
 
         for (int i = 0; i < 4; i++)
         {
             TrainCard_SO topCard = DeckofTrainCards[0];
             DeckofTrainCards.Remove(topCard);
-            PlayerTwo.CardsInHand.Add(topCard);
+            PlayerTwo.TrainCardsInHand.Add(topCard);
         }
     }
     

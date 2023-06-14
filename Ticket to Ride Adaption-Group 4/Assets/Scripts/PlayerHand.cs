@@ -10,9 +10,11 @@ using System;
 public class PlayerHand
 {
     [SerializeField]
-    public List<TrainCard_SO> CardsInHand;
+    public List<TrainCard_SO> TrainCardsInHand;
     [SerializeField]
     public List<DestinationCards_SO> destinationCardsInHand;
 
     public int WoodenTrains = 45;
+
+    public bool ActionTaken;
 }
