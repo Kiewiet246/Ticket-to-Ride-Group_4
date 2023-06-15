@@ -41,6 +41,7 @@ public class CardManager : MonoBehaviour
     public List<DestinationCards_SO> DestCardsDeck;
 
     private GameObject Test;
+
    // [SerializeField]
     // MarketCardClickable cardClickable;
     [SerializeField]
@@ -48,6 +49,7 @@ public class CardManager : MonoBehaviour
 
     private List<GameObject> PrefabList = new List<GameObject>();
 
+    
 
     private void Awake()
     {
@@ -79,14 +81,14 @@ public class CardManager : MonoBehaviour
            for (int i = 0; i < 12; i++)
             {
                 DeckofTrainCards.Add(TrainCard);
-                TrainCard.ClickedInMarket = false;
+                //TrainCard.ClickedInMarket = false;
             }
         }
 
         for (int i = 0; i < 14; i++)
         {
             DeckofTrainCards.Add(LocomotiveCard);
-            LocomotiveCard.ClickedInMarket = false;
+           // LocomotiveCard.ClickedInMarket = false;
         }
 
       
@@ -162,6 +164,9 @@ public class CardManager : MonoBehaviour
 
     public void RefillMarket()
     {
+        
+        
+        
         TrainCard_SO topCard = DeckofTrainCards[0];
         DeckofTrainCards.Remove(topCard);
         openMarket.Add(topCard);
@@ -171,6 +176,8 @@ public class CardManager : MonoBehaviour
         Test = Instantiate(Prefab_TC_UI, OMparent);
         Test.AddComponent<MarketCardClickable>();
         Test.GetComponent<MarketCardClickable>().gameManager_Clickable = gameManager_CardM;
+        Test.gameObject.transform.SetAsLastSibling();
+        Debug.Log(Test.gameObject.transform.GetSiblingIndex()+ "Child");
 
         CheckingMarket();
     }

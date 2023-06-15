@@ -16,16 +16,13 @@ public class UI_TrainCardsInfo : MonoBehaviour
     [SerializeField]
     Image image;
 
-  
+    public bool ClickedInMarket = false;
     public void Update()
     {
         
         image.sprite = TrainCard.sprite;
     }
 
-    public void LogMessage(string message)
-    {
-        Debug.Log(message);
-    }
+   
 
 }

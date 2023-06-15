@@ -18,10 +18,7 @@ public class TrainCard_SO : ScriptableObject
     [SerializeField]
     public Sprite sprite;
 
-    public bool ClickedInMarket = false;
+   
 
-    public void Awake()
-    {
-        ClickedInMarket = false;
-    }
+    
 }

@@ -13,23 +13,24 @@ public class GameManager : MonoBehaviour
     private PlayerHand CurrentPlayer;
 
    [SerializeField]
-    private int CurrentPlayerNumber = 0;
+    private int CurrentPlayerNumber = 0;   
     
 
     private int CardspickedUp = 0;
 
     [SerializeField]
-    public List<PlayerHand> players;
+    public List<PlayerHand> players;  //List of the player's, by using CurrentPlayerNumber we can control who's turn it is and where to add cards and such.
 
     [SerializeField]
     private Transform OpenMarket;
+    public int PositionInHierarchy;
 
-    public TrainCard_SO cardsInMarket;
+    public UI_TrainCardsInfo cardsInMarket;
 
     // Start is called before the first frame update
     void Start()
     {
-        players.Add(cardManager.PlayerOne);
+        players.Add(cardManager.PlayerOne);   
         players.Add(cardManager.PlayerTwo);
     }
 
@@ -62,28 +63,32 @@ public class GameManager : MonoBehaviour
 
     public void PickUp_MarketCard()
     {
-        
-       
 
-        
+          
 
-        for (int i= 0; i < cardManager.openMarket.Count; i++)
+
+
+      for (int i= 0; i < 5; i++)
             
             
         {
-            cardsInMarket = cardManager.openMarket[i];
+
+            
 
 
-            if (cardsInMarket.ClickedInMarket == true)
+           if (i == PositionInHierarchy)
             {
-               // cardsInMarket.ClickedInMarket = false;
-                cardManager.openMarket.Remove(cardsInMarket);
-                CurrentPlayer.TrainCardsInHand.Add(cardsInMarket);
-                
+               // cardsInMarket = OpenMarket.gameObject.GetComponentInChildren<UI_TrainCardsInfo>();
+                cardsInMarket.TrainCard = cardManager.openMarket[i];
+              cardManager.openMarket.Remove(cardsInMarket.TrainCard);
+                CurrentPlayer.TrainCardsInHand.Add(cardsInMarket.TrainCard);
+              
+               cardManager.RefillMarket();
 
-                cardManager.RefillMarket();
-                
+
             }
         }
+
+        
     }
 }

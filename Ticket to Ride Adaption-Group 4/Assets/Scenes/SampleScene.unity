@@ -848,6 +848,8 @@ MonoBehaviour:
   CurrentPlayerNumber: 0
   players: []
   OpenMarket: {fileID: 423007209}
+  PositionInHierarchy: 0
+  cardsInMarket: {fileID: 0}
 --- !u!4 &1010799331
 Transform:
   m_ObjectHideFlags: 0
