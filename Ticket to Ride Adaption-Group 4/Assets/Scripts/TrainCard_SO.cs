@@ -18,7 +18,19 @@ public class TrainCard_SO : ScriptableObject
     [SerializeField]
     public Sprite sprite;
 
-   
+    [SerializeField]
+    public TypesOfTrainCards trainCardsType;
 
-    
+    public enum TypesOfTrainCards
+    {
+        Box,
+        Caboose,
+        Passenger,
+        Tanker,
+        Reefer,
+        Freight,
+        Hopper,
+        Coal,
+        Locomotives
+    }
 }

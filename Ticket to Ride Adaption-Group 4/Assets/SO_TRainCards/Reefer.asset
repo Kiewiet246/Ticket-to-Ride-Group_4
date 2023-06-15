@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CardName: Reefer
   sprite: {fileID: 3513399060882397074, guid: bdefaabfdaee1f04ebacd43d3f324ed5, type: 3}
+  trainCardsType: 4

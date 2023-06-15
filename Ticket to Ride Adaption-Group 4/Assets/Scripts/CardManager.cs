@@ -47,7 +47,7 @@ public class CardManager : MonoBehaviour
     [SerializeField]
     private GameManager gameManager_CardM;
 
-    private List<GameObject> PrefabList = new List<GameObject>();
+   
 
     
 
@@ -154,6 +154,7 @@ public class CardManager : MonoBehaviour
             Test = Instantiate(Prefab_TC_UI, OMparent);
             Test.AddComponent<MarketCardClickable>();
             Test.GetComponent<MarketCardClickable>().gameManager_Clickable = gameManager_CardM;
+            //Test.GetComponent<UI_TrainCardsInfo>().CanPickUpAgain = true;
 
             // Prefab_TC_UI.GetComponent<UI_TrainCardsInfo>().TrainCard = topCard;
         }
@@ -169,15 +170,36 @@ public class CardManager : MonoBehaviour
         
         TrainCard_SO topCard = DeckofTrainCards[0];
         DeckofTrainCards.Remove(topCard);
-        openMarket.Add(topCard);
+        openMarket.Insert(gameManager_CardM.PositionInHierarchy, topCard);
+        
 
         Prefab_TC_UI.GetComponent<UI_TrainCardsInfo>().TrainCard = topCard;
         Test = Prefab_TC_UI;
         Test = Instantiate(Prefab_TC_UI, OMparent);
         Test.AddComponent<MarketCardClickable>();
         Test.GetComponent<MarketCardClickable>().gameManager_Clickable = gameManager_CardM;
-        Test.gameObject.transform.SetAsLastSibling();
-        Debug.Log(Test.gameObject.transform.GetSiblingIndex()+ "Child");
+        // Test.gameObject.transform.SetAsLastSibling();
+
+        Test.gameObject.transform.SetSiblingIndex(gameManager_CardM.PositionInHierarchy);
+
+        if (topCard.trainCardsType == TrainCard_SO.TypesOfTrainCards.Locomotives)
+        {
+            Test.GetComponent<UI_TrainCardsInfo>().CanPickUpAgain = false;
+        }
+         
+        
+        else if (topCard.trainCardsType != TrainCard_SO.TypesOfTrainCards.Locomotives)
+        {
+            for (int i = 0; i < OMparent.childCount; i++)
+            {
+               Transform CheckLoco = OMparent.GetChild(i);
+
+              if (CheckLoco.GetComponent<UI_TrainCardsInfo>().TrainCard.trainCardsType == TrainCard_SO.TypesOfTrainCards.Locomotives)
+                {
+                    CheckLoco.GetComponent<UI_TrainCardsInfo>().CanPickUpAgain = false;
+                }
+            }
+        }
 
         CheckingMarket();
     }

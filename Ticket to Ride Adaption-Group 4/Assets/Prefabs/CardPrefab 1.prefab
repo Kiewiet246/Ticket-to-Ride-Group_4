@@ -91,3 +91,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TrainCard: {fileID: 11400000, guid: 0c074dedff1f5194cb3a597c6421916d, type: 2}
   image: {fileID: 5895343118146828020}
+  CanPickUpAgain: 1

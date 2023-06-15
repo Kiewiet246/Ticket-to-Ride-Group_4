@@ -16,17 +16,20 @@ public class MarketCardClickable : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-       // Destroy(this.gameObject);
-  
+       if (gameManager_Clickable.CurrentPlayer.ActionTaken == false &&
+            this.gameObject.GetComponent<UI_TrainCardsInfo>().CanPickUpAgain == true)
+        {
+            gameManager_Clickable.PositionInHierarchy = this.transform.GetSiblingIndex();
+            gameManager_Clickable.CardClicked = this.gameObject.GetComponent<UI_TrainCardsInfo>();
 
+            gameManager_Clickable.PickUp_MarketCard();
+          
+            
+            
+            Destroy(this.gameObject);
+        }
         
         
-      
-        gameManager_Clickable.PositionInHierarchy = this.transform.GetSiblingIndex();
-        gameManager_Clickable.cardsInMarket = this.gameObject.GetComponent<UI_TrainCardsInfo>();
-       
-        gameManager_Clickable.PickUp_MarketCard();
-        Destroy(this.gameObject);
 
     }
 

@@ -15,8 +15,9 @@ public class UI_TrainCardsInfo : MonoBehaviour
 
     [SerializeField]
     Image image;
-
-    public bool ClickedInMarket = false;
+    [SerializeField]
+    public bool CanPickUpAgain = true;
+   
     public void Update()
     {
         

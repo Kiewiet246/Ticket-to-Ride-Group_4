@@ -10,7 +10,7 @@ using System;
 public class GameManager : MonoBehaviour
 {
     public CardManager cardManager;
-    private PlayerHand CurrentPlayer;
+    public PlayerHand CurrentPlayer;
 
    [SerializeField]
     private int CurrentPlayerNumber = 0;   
@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
     private Transform OpenMarket;
     public int PositionInHierarchy;
 
-    public UI_TrainCardsInfo cardsInMarket;
+    public UI_TrainCardsInfo CardClicked;
 
     // Start is called before the first frame update
     void Start()
@@ -64,31 +64,25 @@ public class GameManager : MonoBehaviour
     public void PickUp_MarketCard()
     {
 
-          
-
-
-
-      for (int i= 0; i < 5; i++)
-            
-            
+        if (CardspickedUp < 2 &&
+            CurrentPlayer.ActionTaken == false)
         {
+            CardClicked.TrainCard = cardManager.openMarket[PositionInHierarchy];
+            cardManager.openMarket.Remove(CardClicked.TrainCard);
+            CurrentPlayer.TrainCardsInHand.Add(CardClicked.TrainCard);
+            cardManager.RefillMarket();
 
+            CardspickedUp += 1;
             
-
-
-           if (i == PositionInHierarchy)
+            if (CardClicked.TrainCard.trainCardsType == TrainCard_SO.TypesOfTrainCards.Locomotives)
             {
-               // cardsInMarket = OpenMarket.gameObject.GetComponentInChildren<UI_TrainCardsInfo>();
-                cardsInMarket.TrainCard = cardManager.openMarket[i];
-              cardManager.openMarket.Remove(cardsInMarket.TrainCard);
-                CurrentPlayer.TrainCardsInHand.Add(cardsInMarket.TrainCard);
-              
-               cardManager.RefillMarket();
-
-
+                CurrentPlayer.ActionTaken = true;
             }
         }
 
         
+
+       
+
     }
 }
