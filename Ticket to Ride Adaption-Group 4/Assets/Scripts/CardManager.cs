@@ -253,6 +253,13 @@ public class CardManager : MonoBehaviour
             
         }
 
+        for (int i = 0; i < OMparent.childCount; i++)
+        {
+            Transform CheckLoco = OMparent.GetChild(i);
+            Destroy(CheckLoco.gameObject);
+        }
+
+
     }
 
     public void ShuffleDestCards()

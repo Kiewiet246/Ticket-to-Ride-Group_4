@@ -27,6 +27,9 @@ public class GameManager : MonoBehaviour
 
     public UI_TrainCardsInfo CardClicked;
 
+    [SerializeField]
+    private GameObject NextPlayerButton;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -43,6 +46,12 @@ public class GameManager : MonoBehaviour
         if (CardspickedUp == 2)
         {
             CurrentPlayer.ActionTaken = true;
+            
+        }
+
+        if (CurrentPlayer.ActionTaken == true)
+        {
+            NextPlayerButton.SetActive(true);
         }
     }
 
@@ -57,7 +66,15 @@ public class GameManager : MonoBehaviour
             CurrentPlayer.TrainCardsInHand.Add(topcard);
             CardspickedUp += 1;
         }
-       
+        for (int i = 0; i < OpenMarket.childCount; i++)
+        {
+            Transform CheckLoco = OpenMarket.GetChild(i);
+
+            if (CheckLoco.GetComponent<UI_TrainCardsInfo>().TrainCard.trainCardsType == TrainCard_SO.TypesOfTrainCards.Locomotives)
+            {
+                CheckLoco.GetComponent<UI_TrainCardsInfo>().CanPickUpAgain = false;
+            }
+        }
 
     }
 
@@ -80,9 +97,32 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        
+     }
 
-       
+    public void NextPlayer()
+    {
+        if (CurrentPlayerNumber == 0)
+        {
+            CurrentPlayerNumber = 1;
+          // CurrentPlayer.ActionTaken = false;
+        }
 
+        else if (CurrentPlayerNumber == 1)
+        {
+            CurrentPlayerNumber = 0;
+           // CurrentPlayer.ActionTaken = false;
+        }
+
+        CurrentPlayer.ActionTaken = false;
+        CardspickedUp = 0;
+        NextPlayerButton.SetActive(false);
+
+        for (int i = 0; i < OpenMarket.childCount; i++)
+        {
+            Transform CheckLoco = OpenMarket.GetChild(i);
+
+             CheckLoco.GetComponent<UI_TrainCardsInfo>().CanPickUpAgain = true;
+           
+        }
     }
 }
