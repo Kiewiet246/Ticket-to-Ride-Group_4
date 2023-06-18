@@ -84,12 +84,18 @@ public class GameManager : MonoBehaviour
         if (CardspickedUp < 2 &&
             CurrentPlayer.ActionTaken == false)
         {
-            CardClicked.TrainCard = cardManager.openMarket[PositionInHierarchy];
-            cardManager.openMarket.Remove(CardClicked.TrainCard);
+
+           
+           
+            cardManager.openMarket_list.Remove(cardManager.openMarket_list[PositionInHierarchy]);
+
+
             CurrentPlayer.TrainCardsInHand.Add(CardClicked.TrainCard);
             cardManager.RefillMarket();
 
             CardspickedUp += 1;
+
+            Debug.Log(CardClicked.TrainCard.CardName);
             
             if (CardClicked.TrainCard.trainCardsType == TrainCard_SO.TypesOfTrainCards.Locomotives)
             {
@@ -104,13 +110,13 @@ public class GameManager : MonoBehaviour
         if (CurrentPlayerNumber == 0)
         {
             CurrentPlayerNumber = 1;
-          // CurrentPlayer.ActionTaken = false;
+          
         }
 
         else if (CurrentPlayerNumber == 1)
         {
             CurrentPlayerNumber = 0;
-           // CurrentPlayer.ActionTaken = false;
+          
         }
 
         CurrentPlayer.ActionTaken = false;
