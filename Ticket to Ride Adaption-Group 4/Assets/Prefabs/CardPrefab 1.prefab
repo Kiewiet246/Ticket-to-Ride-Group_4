@@ -28,7 +28,7 @@ RectTransform:
   m_GameObject: {fileID: 4383188734982381628}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.09701382, y: 0.77319473, z: 1}
+  m_LocalScale: {x: 7.8, y: 0.77319473, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -89,5 +89,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22a9f8719b62f684f8dbffe2c04e5b2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TrainCard: {fileID: 11400000, guid: 0c074dedff1f5194cb3a597c6421916d, type: 2}
+  TrainCard: {fileID: 11400000, guid: 846e39b65c83489499703307e012bac6, type: 2}
   image: {fileID: 5895343118146828020}
+  CanPickUpAgain: 1

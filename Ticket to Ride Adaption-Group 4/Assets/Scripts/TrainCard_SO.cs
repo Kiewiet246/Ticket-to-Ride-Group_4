@@ -18,10 +18,19 @@ public class TrainCard_SO : ScriptableObject
     [SerializeField]
     public Sprite sprite;
 
-    public bool ClickedInMarket = false;
+    [SerializeField]
+    public TypesOfTrainCards trainCardsType;
 
-    public void Awake()
+    public enum TypesOfTrainCards
     {
-        ClickedInMarket = false;
+        Box,
+        Caboose,
+        Passenger,
+        Tanker,
+        Reefer,
+        Freight,
+        Hopper,
+        Coal,
+        Locomotives
     }
 }

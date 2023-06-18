@@ -10,26 +10,30 @@ using System;
 public class GameManager : MonoBehaviour
 {
     public CardManager cardManager;
-    private PlayerHand CurrentPlayer;
+    public PlayerHand CurrentPlayer;
 
    [SerializeField]
-    private int CurrentPlayerNumber = 0;
+    private int CurrentPlayerNumber = 0;   
     
 
     private int CardspickedUp = 0;
 
     [SerializeField]
-    public List<PlayerHand> players;
+    public List<PlayerHand> players;  //List of the player's, by using CurrentPlayerNumber we can control who's turn it is and where to add cards and such.
 
     [SerializeField]
     private Transform OpenMarket;
+    public int PositionInHierarchy;
 
-    public TrainCard_SO cardsInMarket;
+    public UI_TrainCardsInfo CardClicked;
+
+    [SerializeField]
+    private GameObject NextPlayerButton;
 
     // Start is called before the first frame update
     void Start()
     {
-        players.Add(cardManager.PlayerOne);
+        players.Add(cardManager.PlayerOne);   
         players.Add(cardManager.PlayerTwo);
     }
 
@@ -42,6 +46,12 @@ public class GameManager : MonoBehaviour
         if (CardspickedUp == 2)
         {
             CurrentPlayer.ActionTaken = true;
+            
+        }
+
+        if (CurrentPlayer.ActionTaken == true)
+        {
+            NextPlayerButton.SetActive(true);
         }
     }
 
@@ -56,34 +66,69 @@ public class GameManager : MonoBehaviour
             CurrentPlayer.TrainCardsInHand.Add(topcard);
             CardspickedUp += 1;
         }
-       
+        for (int i = 0; i < OpenMarket.childCount; i++)
+        {
+            Transform CheckLoco = OpenMarket.GetChild(i);
+
+            if (CheckLoco.GetComponent<UI_TrainCardsInfo>().TrainCard.trainCardsType == TrainCard_SO.TypesOfTrainCards.Locomotives)
+            {
+                CheckLoco.GetComponent<UI_TrainCardsInfo>().CanPickUpAgain = false;
+            }
+        }
 
     }
 
     public void PickUp_MarketCard()
     {
-        
-       
 
-        
-
-        for (int i= 0; i < cardManager.openMarket.Count; i++)
-            
-            
+        if (CardspickedUp < 2 &&
+            CurrentPlayer.ActionTaken == false)
         {
-            cardsInMarket = cardManager.openMarket[i];
+
+           
+           
+            cardManager.openMarket_list.Remove(cardManager.openMarket_list[PositionInHierarchy]);
 
 
-            if (cardsInMarket.ClickedInMarket == true)
+            CurrentPlayer.TrainCardsInHand.Add(CardClicked.TrainCard);
+            cardManager.RefillMarket();
+
+            CardspickedUp += 1;
+
+            Debug.Log(CardClicked.TrainCard.CardName);
+            
+            if (CardClicked.TrainCard.trainCardsType == TrainCard_SO.TypesOfTrainCards.Locomotives)
             {
-               // cardsInMarket.ClickedInMarket = false;
-                cardManager.openMarket.Remove(cardsInMarket);
-                CurrentPlayer.TrainCardsInHand.Add(cardsInMarket);
-                
-
-                cardManager.RefillMarket();
-                
+                CurrentPlayer.ActionTaken = true;
             }
+        }
+
+     }
+
+    public void NextPlayer()
+    {
+        if (CurrentPlayerNumber == 0)
+        {
+            CurrentPlayerNumber = 1;
+          
+        }
+
+        else if (CurrentPlayerNumber == 1)
+        {
+            CurrentPlayerNumber = 0;
+          
+        }
+
+        CurrentPlayer.ActionTaken = false;
+        CardspickedUp = 0;
+        NextPlayerButton.SetActive(false);
+
+        for (int i = 0; i < OpenMarket.childCount; i++)
+        {
+            Transform CheckLoco = OpenMarket.GetChild(i);
+
+             CheckLoco.GetComponent<UI_TrainCardsInfo>().CanPickUpAgain = true;
+           
         }
     }
 }
