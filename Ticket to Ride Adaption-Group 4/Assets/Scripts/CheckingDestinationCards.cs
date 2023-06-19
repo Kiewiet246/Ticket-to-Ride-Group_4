@@ -40,7 +40,7 @@ public class CheckingDestinationCards : MonoBehaviour
         foreach (DestinationCards_SO destinationCards in ListDestCards)
         {
             DestCard = destinationCards;
-            Debug.Log(DestCard);
+            
             CheckDestCard();
         }
 
@@ -72,6 +72,8 @@ public class CheckingDestinationCards : MonoBehaviour
     
     public void CheckDestCard()
     {
+        Debug.Log(DestCard);
+        
         foreach (GameObject road in TestPlayer.roadsBuilt)
         {
           if (road.GetComponent<RoutesScript>().Destination_1 == DestCard.destinationA ||
@@ -82,6 +84,7 @@ public class CheckingDestinationCards : MonoBehaviour
                 Followroad.Add(road);
                 checkFromThis = road;
                 ContinueCheck();
+                break;
             }
         }
     }
@@ -103,27 +106,30 @@ public class CheckingDestinationCards : MonoBehaviour
 
                 TestPlayer.roadsBuilt.Remove(road);
                 Followroad.Add(road);
-               
+
 
                 if (road.gameObject.GetComponent<RoutesScript>().Destination_1 == DestCard.destinationB ||
                     road.gameObject.GetComponent<RoutesScript>().Destination_2 == DestCard.destinationB)
                 {
                     TestPlayer.PlayerScore += DestCard.PointValue;
+                    Debug.Log(TestPlayer.PlayerScore + " if added");
 
                     foreach (GameObject Placeroadback in Followroad)
                     {
-                       
-                       
-                       // Followroad.Remove(Placeroadback);
+
+
+                        // Followroad.Remove(Placeroadback);
                         TestPlayer.roadsBuilt.Add(Placeroadback);
                     }
 
-                    for (int i = 0; i < Followroad.Count; i+=0)
+                    for (int i = 0; i < Followroad.Count; i += 0)
                     {
-                        
-                        
+
+
                         Followroad.Remove(Followroad[i]);
                     }
+
+                    break;
                 }
 
 
@@ -134,29 +140,55 @@ public class CheckingDestinationCards : MonoBehaviour
                 else
                 {
                     FoundARoad = false;
-                   // Debug.Log("hier");
+                    Debug.Log("hier");
                     checkFromThis = road;
                     ContinueCheck();
+                    break;
                 }
 
             }
 
-            //Debug.Log("help");
+            else
+            {
+                FoundARoad = false;
+                
+            }
         }
 
-        if (FoundARoad == false)
+
+
+        Debug.Log(Followroad.Count + " count");
+        Debug.Log(FoundARoad +" " + DestCard);
+        
+        if (FoundARoad == false &&
+             Followroad.Count == 1)
         {
-           
-            
+            Debug.Log("Hi");
+            TestPlayer.PlayerScore -= DestCard.PointValue;
+            Debug.Log(TestPlayer.PlayerScore + " if subtrackted");
+
+        }
+
+        else if (FoundARoad == false &&
+            Followroad.Count > 1)
+        {
+
+            Debug.Log("Hello");
             GameObject keeptrack = checkFromThis;
             Followroad.Remove(keeptrack);
             //TestPlayer.roadsBuilt.Add(keeptrack);
             storeRoad.Add(keeptrack);
            // Debug.Log(Followroad.Count);
             checkFromThis = Followroad[Followroad.Count - 1];
+           // FoundARoad = true;
             ContinueCheck();
+            
         }
 
+        
+       
+        
+        
         foreach (GameObject Placeroadback in Followroad)
         {
 
@@ -183,7 +215,7 @@ public class CheckingDestinationCards : MonoBehaviour
         for (int i = 0; i < storeRoad.Count; i += 0)
         {
 
-
+           
             storeRoad.Remove(storeRoad[i]);
         }
     }
