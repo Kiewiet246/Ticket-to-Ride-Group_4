@@ -15,7 +15,7 @@ public class DestinationCards_SO : ScriptableObject
     public Destinations destinationA;
 
     [SerializeField]
-    public Destinations destinationsB;
+    public Destinations destinationB;
 
     [SerializeField]
     public int PointValue;

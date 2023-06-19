@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Duluth_Houston
   m_EditorClassIdentifier: 
   destinationA: 6
-  destinationsB: 9
+  destinationB: 9
   PointValue: 8

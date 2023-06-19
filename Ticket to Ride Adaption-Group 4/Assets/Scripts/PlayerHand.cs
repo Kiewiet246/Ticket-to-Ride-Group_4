@@ -18,5 +18,10 @@ public class PlayerHand
 
     public bool ActionTaken;
 
-   
+    [SerializeField]
+    public List<GameObject> roadsBuilt;
+
+
+    [SerializeField]
+    public int PlayerScore = 0;
 }
