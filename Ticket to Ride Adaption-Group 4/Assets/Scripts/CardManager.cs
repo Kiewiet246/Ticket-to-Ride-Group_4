@@ -10,27 +10,27 @@ using UnityEngine.UI;
 public class CardManager : MonoBehaviour
 {
     [SerializeField]
-    private TrainCard_SO[] TrainCards_So;
+    private TrainCard_SO[] TrainCards_So; //USed to add the scriptable objects in the inspector.
     [SerializeField]
-    private TrainCard_SO LocomotiveCard;
-   
-    
-    [SerializeField]
-    public List<TrainCard_SO> DeckofTrainCards;
-    [SerializeField]
-    List<TrainCard_SO> Discardpile_TrainCards;
+    private TrainCard_SO LocomotiveCard; //USed to add the scriptable objects in the inspector.
 
 
     [SerializeField]
-    public List<TrainCard_SO> openMarket_list;
+    public List<TrainCard_SO> DeckofTrainCards_list; // This list will be the deck of train cards.
+    [SerializeField]
+    List<TrainCard_SO> Discardpile_TrainCards_list; // The discard pile.
 
-    private int CountLoco =0;
 
     [SerializeField]
-    private Transform OMparent;
+    public List<TrainCard_SO> openMarket_list; //The open market
+
+    private int CountLoco =0; //int to keep track of how many Locomotive cards are in the open market.
+
     [SerializeField]
-    private GameObject Prefab_TC_UI;
-    private TrainCard_SO TCFORUi;
+    private Transform OMparent; // Used to spawn the UI-train cards in the open market.
+    [SerializeField]
+    private GameObject Prefab_TC_UI; // Prefab use to spawn in the Ui for train cards. Scriptable objects info is applied to this.
+   // private TrainCard_SO TCFORUi;
 
     [SerializeField]
     public PlayerHand PlayerOne;
@@ -38,9 +38,9 @@ public class CardManager : MonoBehaviour
     public PlayerHand PlayerTwo;
 
     [SerializeField]
-    public List<DestinationCards_SO> DestCardsDeck;
+    public List<DestinationCards_SO> DestCardsDeck; // List of destination cards.
 
-    private GameObject Test;
+    private GameObject InstantiateThisObject;
 
    // [SerializeField]
     // MarketCardClickable cardClickable;
@@ -74,20 +74,20 @@ public class CardManager : MonoBehaviour
 
     public void CreateDeck()
     {
-        DeckofTrainCards = new List<TrainCard_SO>();
+        DeckofTrainCards_list = new List<TrainCard_SO>();
       
         foreach (TrainCard_SO TrainCard in TrainCards_So)
         {
            for (int i = 0; i < 12; i++)
             {
-                DeckofTrainCards.Add(TrainCard);
+                DeckofTrainCards_list.Add(TrainCard);
                 //TrainCard.ClickedInMarket = false;
             }
         }
 
         for (int i = 0; i < 14; i++)
         {
-            DeckofTrainCards.Add(LocomotiveCard);
+            DeckofTrainCards_list.Add(LocomotiveCard);
            // LocomotiveCard.ClickedInMarket = false;
         }
 
@@ -96,8 +96,8 @@ public class CardManager : MonoBehaviour
 
     public void ShuffleTrainCards()
     {
-        int Length = DeckofTrainCards.Count;
-        int HalfLength = DeckofTrainCards.Count / 2;
+        int Length = DeckofTrainCards_list.Count;
+        int HalfLength = DeckofTrainCards_list.Count / 2;
         for (int i = 0; i < HalfLength; i++)
         {
             int randomIntegerA = UnityEngine.Random.Range(0, Length);
@@ -108,10 +108,10 @@ public class CardManager : MonoBehaviour
 
     private void SwapOnDeckTC(int indexA, int indexB)
     {
-        TrainCard_SO elementA = DeckofTrainCards[indexA];
-        TrainCard_SO elementB = DeckofTrainCards[indexB];
-        DeckofTrainCards[indexA] = elementB;
-        DeckofTrainCards[indexB] = elementA;
+        TrainCard_SO elementA = DeckofTrainCards_list[indexA];
+        TrainCard_SO elementB = DeckofTrainCards_list[indexB];
+        DeckofTrainCards_list[indexA] = elementB;
+        DeckofTrainCards_list[indexB] = elementA;
     }
 
 
@@ -121,8 +121,8 @@ public class CardManager : MonoBehaviour
 
         for (int i = 0; i < 4; i++)
         {
-            TrainCard_SO topCard = DeckofTrainCards[0];
-            DeckofTrainCards.Remove(topCard);
+            TrainCard_SO topCard = DeckofTrainCards_list[0];
+            DeckofTrainCards_list.Remove(topCard);
             PlayerOne.TrainCardsInHand.Add(topCard);
         }
 
@@ -130,8 +130,8 @@ public class CardManager : MonoBehaviour
 
         for (int i = 0; i < 4; i++)
         {
-            TrainCard_SO topCard = DeckofTrainCards[0];
-            DeckofTrainCards.Remove(topCard);
+            TrainCard_SO topCard = DeckofTrainCards_list[0];
+            DeckofTrainCards_list.Remove(topCard);
             PlayerTwo.TrainCardsInHand.Add(topCard);
         }
     }
@@ -146,14 +146,14 @@ public class CardManager : MonoBehaviour
         
         for (int i =0; i< 5; i++)
         {
-            TrainCard_SO topCard = DeckofTrainCards[0];
-            DeckofTrainCards.Remove(topCard);
+            TrainCard_SO topCard = DeckofTrainCards_list[0];
+            DeckofTrainCards_list.Remove(topCard);
             openMarket_list.Add(topCard);
             Prefab_TC_UI.GetComponent<UI_TrainCardsInfo>().TrainCard = topCard;
-            Test = Prefab_TC_UI;
-            Test = Instantiate(Prefab_TC_UI, OMparent);
-            Test.AddComponent<MarketCardClickable>();
-            Test.GetComponent<MarketCardClickable>().gameManager_Clickable = gameManager_CardM;
+            InstantiateThisObject = Prefab_TC_UI;
+            InstantiateThisObject = Instantiate(Prefab_TC_UI, OMparent);
+            InstantiateThisObject.AddComponent<MarketCardClickable>();
+            InstantiateThisObject.GetComponent<MarketCardClickable>().gameManager_Clickable = gameManager_CardM;
             //Test.GetComponent<UI_TrainCardsInfo>().CanPickUpAgain = true;
 
             // Prefab_TC_UI.GetComponent<UI_TrainCardsInfo>().TrainCard = topCard;
@@ -165,11 +165,11 @@ public class CardManager : MonoBehaviour
 
     public void RefillMarket()
     {
-        Debug.Log(DeckofTrainCards[0] + " Topcard");
+        Debug.Log(DeckofTrainCards_list[0] + " Topcard");
         
 
-            TrainCard_SO topCard = DeckofTrainCards[0];
-        DeckofTrainCards.Remove(topCard);
+            TrainCard_SO topCard = DeckofTrainCards_list[0];
+        DeckofTrainCards_list.Remove(topCard);
         
         
         openMarket_list.Insert(gameManager_CardM.PositionInHierarchy, topCard);
@@ -177,13 +177,13 @@ public class CardManager : MonoBehaviour
        
 
         Prefab_TC_UI.GetComponent<UI_TrainCardsInfo>().TrainCard = topCard;
-        Test = Prefab_TC_UI;
-       Test = Instantiate(Prefab_TC_UI, OMparent);
-        Test.gameObject.transform.SetSiblingIndex(gameManager_CardM.PositionInHierarchy);
+        InstantiateThisObject = Prefab_TC_UI;
+       InstantiateThisObject = Instantiate(Prefab_TC_UI, OMparent);
+        InstantiateThisObject.gameObject.transform.SetSiblingIndex(gameManager_CardM.PositionInHierarchy);
         
-        Test.AddComponent<MarketCardClickable>();
-        Test.GetComponent<MarketCardClickable>().gameManager_Clickable = gameManager_CardM;
-        Debug.Log(Test.GetComponent<UI_TrainCardsInfo>().TrainCard.CardName + " card under OMparent");
+        InstantiateThisObject.AddComponent<MarketCardClickable>();
+        InstantiateThisObject.GetComponent<MarketCardClickable>().gameManager_Clickable = gameManager_CardM;
+        Debug.Log(InstantiateThisObject.GetComponent<UI_TrainCardsInfo>().TrainCard.CardName + " card under OMparent");
         
         foreach (Transform OMchild in OMparent)
         {
@@ -195,7 +195,7 @@ public class CardManager : MonoBehaviour
 
         if (topCard.trainCardsType == TrainCard_SO.TypesOfTrainCards.Locomotives)
         {
-            Test.GetComponent<UI_TrainCardsInfo>().CanPickUpAgain = false;
+            InstantiateThisObject.GetComponent<UI_TrainCardsInfo>().CanPickUpAgain = false;
         }
          
         
@@ -209,16 +209,6 @@ public class CardManager : MonoBehaviour
                     OMchild.GetComponent<UI_TrainCardsInfo>().CanPickUpAgain = false;
                 }
             }
-
-
-
-
-
-
-
-
-
-
 
             //for (int i = 0; i < OMparent.childCount; i++)
             //{
@@ -284,7 +274,7 @@ public class CardManager : MonoBehaviour
         {
             TrainCard_SO FirstCard = openMarket_list[0];
             openMarket_list.Remove(FirstCard);
-            Discardpile_TrainCards.Add(FirstCard);
+            Discardpile_TrainCards_list.Add(FirstCard);
             
         }
 

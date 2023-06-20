@@ -10,18 +10,20 @@ using System;
 public class PlayerHand
 {
     [SerializeField]
-    public List<TrainCard_SO> TrainCardsInHand;
+    public List<TrainCard_SO> TrainCardsInHand;  // List of TrainCards in the player's hand.
     [SerializeField]
-    public List<DestinationCards_SO> destinationCardsInHand;
+    public List<DestinationCards_SO> destinationCardsInHand; // List of Destination Cards in player's hand.
 
-    public int WoodenTrains = 45;
+    public int WoodenTrains = 45; //Wooden trains of player. If a route is build this should be subtracted.
 
-    public bool ActionTaken;
 
-    [SerializeField]
-    public List<GameObject> roadsBuilt;
-
+    public bool ActionTaken; // Checks if the player has done the an action.
+    public bool BusyWithAction; // Used with the pick up train Cards action so players can't pick up a card and do something else.
 
     [SerializeField]
-    public int PlayerScore = 0;
+    public List<GameObject> roadsBuilt; // List of all the roads the player has built 
+
+
+    [SerializeField]
+    public int PlayerScore = 0; // The player's score
 }

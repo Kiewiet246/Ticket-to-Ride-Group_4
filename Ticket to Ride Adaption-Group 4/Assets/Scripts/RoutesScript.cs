@@ -8,12 +8,15 @@ using System;
 [Serializable]
 public class RoutesScript : MonoBehaviour
 {
-   [SerializeField]
+    [SerializeField]
     public DestinationCards_SO.Destinations Destination_1;
 
     [SerializeField]
     public DestinationCards_SO.Destinations Destination_2;
 
     [SerializeField]
-    public TrainCard_SO.TypesOfTrainCards RouteCoulour;
+    public TrainCard_SO.TypesOfTrainCards RouteColour;
+
+    [SerializeField]
+    public int RequiredAmountofTrains;
 }
