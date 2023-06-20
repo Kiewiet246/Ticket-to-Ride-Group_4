@@ -27,7 +27,7 @@ public class CheckingDestinationCards : MonoBehaviour
 
     private GameObject checkFromThis;
 
-
+    private bool DestinationIsPossible;
     private bool FoundARoad;
     private int PositionInRoadsbuiltList;
 
@@ -84,8 +84,20 @@ public class CheckingDestinationCards : MonoBehaviour
                 Followroad.Add(road);
                 checkFromThis = road;
                 ContinueCheck();
+                DestinationIsPossible = true;
                 break;
             }
+
+          else
+            {
+                DestinationIsPossible = false;
+
+            }
+        }
+
+        if (DestinationIsPossible == false)
+        {
+            TestPlayer.PlayerScore -= DestCard.PointValue;
         }
     }
 
@@ -161,7 +173,7 @@ public class CheckingDestinationCards : MonoBehaviour
         Debug.Log(FoundARoad +" " + DestCard);
         
         if (FoundARoad == false &&
-             Followroad.Count == 1)
+             Followroad.Count <= 1)
         {
             Debug.Log("Hi");
             TestPlayer.PlayerScore -= DestCard.PointValue;
