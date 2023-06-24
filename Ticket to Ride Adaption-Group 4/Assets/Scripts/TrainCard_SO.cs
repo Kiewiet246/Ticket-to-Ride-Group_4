@@ -33,7 +33,5 @@ public class TrainCard_SO : ScriptableObject
         Coal,
         None,
         Locomotives
-        
-
-    }
+      }
 }

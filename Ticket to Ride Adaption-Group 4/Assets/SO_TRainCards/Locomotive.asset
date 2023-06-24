@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CardName: Locomotive
   sprite: {fileID: 2234396549910366726, guid: bdefaabfdaee1f04ebacd43d3f324ed5, type: 3}
-  trainCardsType: 8
+  trainCardsType: 9

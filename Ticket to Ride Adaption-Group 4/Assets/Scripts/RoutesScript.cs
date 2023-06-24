@@ -48,7 +48,7 @@ public class RoutesScript : MonoBehaviour, IPointerClickHandler
             Rend = child.gameObject.GetComponent<Renderer>();
             Rend.enabled = true;
             Rend.sharedMaterial = material[(int)RouteColour];
-            Debug.Log((int)RouteColour);
+            
         }
 
 

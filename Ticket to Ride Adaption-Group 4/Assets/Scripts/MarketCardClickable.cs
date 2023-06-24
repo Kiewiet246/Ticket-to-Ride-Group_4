@@ -23,15 +23,16 @@ public class MarketCardClickable : MonoBehaviour, IPointerClickHandler
             Debug.Log(this.gameObject.GetComponent<UI_TrainCardsInfo>().TrainCard.CardName + " was clicked");
             gameManager_Clickable.PositionInHierarchy = this.transform.GetSiblingIndex();   //Gets position of the child in Hierachy under OpenMarket parent
             gameManager_Clickable.CardClicked = this.gameObject.GetComponent<UI_TrainCardsInfo>(); //Gets the information of the UI_TrainCard clicked.
+           
             gameManager_Clickable.CurrentPlayer.BusyWithAction = true;
             this.gameObject.transform.parent = null;
          
             
             gameManager_Clickable.PickUp_MarketCard(); // Calls the PickUp_MarketCard method which moves the card from OpenMarket list to TrainCardsInHand-list of current player.
 
+            Debug.Log(gameManager_Clickable.CardClicked.TrainCard.CardName + " CardClicked");
 
-
-           Destroy(this.gameObject); // Destroys the card that was clicked.
+            Destroy(this.gameObject); // Destroys the card that was clicked.
         }
 
        

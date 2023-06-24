@@ -43,16 +43,7 @@ public class GameManager : MonoBehaviour
         CurrentPlayer = players[CurrentPlayerNumber];
 
 
-        if (CardspickedUp == 2)  // if statement to check if the player has picked up the maximum amount of cards.
-        {
-            CurrentPlayer.ActionTaken = true;
-            
-        }
-
-        if (CurrentPlayer.ActionTaken == true) // This sets the NextplayerButton active after the player has done their action.
-        {
-            NextPlayerButton.SetActive(true);  
-        }
+        
     }
 
 
@@ -73,6 +64,17 @@ public class GameManager : MonoBehaviour
             if (CheckLoco.GetComponent<UI_TrainCardsInfo>().TrainCard.trainCardsType == TrainCard_SO.TypesOfTrainCards.Locomotives)
             {
                 CheckLoco.GetComponent<UI_TrainCardsInfo>().CanPickUpAgain = false; //If a locomotive card is found, it prevents the player for picking it up for the its second card.
+            }
+
+            if (CardspickedUp == 2)  // if statement to check if the player has picked up the maximum amount of cards.
+            {
+                CurrentPlayer.ActionTaken = true;
+
+            }
+
+            if (CurrentPlayer.ActionTaken == true) // This sets the NextplayerButton active after the player has done their action.
+            {
+                NextPlayerButton.SetActive(true);
             }
         }
 
@@ -95,12 +97,27 @@ public class GameManager : MonoBehaviour
 
             CardspickedUp += 1;
 
-            Debug.Log(CardClicked.TrainCard.CardName);
-            
-            if (CardClicked.TrainCard.trainCardsType == TrainCard_SO.TypesOfTrainCards.Locomotives) // If train Crad clicked was a Locomotive Card it ends player's turn. 
+
+            Debug.Log(CardClicked.TrainCard.trainCardsType);
+            if (CardClicked.TrainCard.trainCardsType == TrainCard_SO.TypesOfTrainCards.Locomotives) // If train Card clicked was a Locomotive Card it ends player's turn. 
             {
                 CurrentPlayer.ActionTaken = true;
+                Debug.Log(CurrentPlayer.ActionTaken);
             }
+
+            if (CardspickedUp == 2)  // if statement to check if the player has picked up the maximum amount of cards.
+            {
+                CurrentPlayer.ActionTaken = true;
+                Debug.Log("hier");
+
+            }
+
+            if (CurrentPlayer.ActionTaken == true) // This sets the NextplayerButton active after the player has done their action.
+            {
+                NextPlayerButton.SetActive(true);
+            }
+
+            Debug.Log(CurrentPlayer.ActionTaken + " End");
         }
 
      }

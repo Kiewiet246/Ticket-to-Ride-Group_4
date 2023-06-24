@@ -124,7 +124,7 @@ public class CheckingDestinationCards : MonoBehaviour
                     road.gameObject.GetComponent<RoutesScript>().Destination_2 == DestCard.destinationB)
                 {
                     TestPlayer.PlayerScore += DestCard.PointValue;
-                    Debug.Log(TestPlayer.PlayerScore + " if added");
+                   // Debug.Log(TestPlayer.PlayerScore + " if added");
 
                     foreach (GameObject Placeroadback in Followroad)
                     {
@@ -152,7 +152,7 @@ public class CheckingDestinationCards : MonoBehaviour
                 else
                 {
                     FoundARoad = false;
-                    Debug.Log("hier");
+                   // Debug.Log("hier");
                     checkFromThis = road;
                     ContinueCheck();
                     break;
@@ -169,15 +169,15 @@ public class CheckingDestinationCards : MonoBehaviour
 
 
 
-        Debug.Log(Followroad.Count + " count");
-        Debug.Log(FoundARoad +" " + DestCard);
+       // Debug.Log(Followroad.Count + " count");
+       // Debug.Log(FoundARoad +" " + DestCard);
         
         if (FoundARoad == false &&
              Followroad.Count <= 1)
         {
-            Debug.Log("Hi");
+          //  Debug.Log("Hi");
             TestPlayer.PlayerScore -= DestCard.PointValue;
-            Debug.Log(TestPlayer.PlayerScore + " if subtrackted");
+            //Debug.Log(TestPlayer.PlayerScore + " if subtrackted");
 
         }
 
@@ -185,7 +185,7 @@ public class CheckingDestinationCards : MonoBehaviour
             Followroad.Count > 1)
         {
 
-            Debug.Log("Hello");
+          // Debug.Log("Hello");
             GameObject keeptrack = checkFromThis;
             Followroad.Remove(keeptrack);
             //TestPlayer.roadsBuilt.Add(keeptrack);

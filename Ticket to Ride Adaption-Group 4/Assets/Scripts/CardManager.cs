@@ -47,8 +47,8 @@ public class CardManager : MonoBehaviour
     [SerializeField]
     private GameManager gameManager_CardM;
 
-   
-
+  
+    
     
 
     private void Awake()
@@ -63,8 +63,8 @@ public class CardManager : MonoBehaviour
 
         ShuffleDestCards();
         DealDC();
-       
 
+      
     }
 
     public void Update()
