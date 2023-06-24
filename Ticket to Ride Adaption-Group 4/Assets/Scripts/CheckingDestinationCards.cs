@@ -37,12 +37,12 @@ public class CheckingDestinationCards : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        foreach (DestinationCards_SO destinationCards in ListDestCards)
-        {
-            DestCard = destinationCards;
+      //  foreach (DestinationCards_SO destinationCards in ListDestCards)
+      //  {
+       //     DestCard = destinationCards;
             
-            CheckDestCard();
-        }
+         //  CheckDestCard();
+       // }
 
 
         
