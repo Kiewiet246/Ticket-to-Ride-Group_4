@@ -27,6 +27,7 @@ public class DestinationCards_SO : ScriptableObject
         Boston,
         Calgary,
         Chicago,
+        Charleston,
         Dallas,
         Denver,
         Duluth,
@@ -34,6 +35,7 @@ public class DestinationCards_SO : ScriptableObject
         Helena,
         Houston,
         Kansas_City,
+        Los_Vegas,
         Little_Rock,
         Los_Angeles,
         Miami,
@@ -42,9 +44,12 @@ public class DestinationCards_SO : ScriptableObject
         New_Orleans,
         New_York,
         Oklahoma_City,
+        Omaha,
         Phoenix,
         Pittsburgh,
         Portland,
+        Raleigh,
+        Saint_Louis,
         Salt_Lake_City,
         San_Francisco,
         Santa_Fe,
@@ -52,6 +57,7 @@ public class DestinationCards_SO : ScriptableObject
         Seattle,
         Toronto,
         Vancouver,
+        Washington,
         Winnipeg
     }
 }
