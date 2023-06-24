@@ -52,6 +52,16 @@ MonoBehaviour:
   RequiredAmountofTrains: 1
   TwinRoad: {fileID: 0}
   HasTwin: 1
+  material:
+  - {fileID: 2100000, guid: b7ba64b660f23514f9c3228570a298ed, type: 2}
+  - {fileID: 2100000, guid: 6d5feb54930a8b54896aaf594fb0baae, type: 2}
+  - {fileID: 2100000, guid: 30c9defeae021cc4296a73beb3207303, type: 2}
+  - {fileID: 2100000, guid: a23d6266731cef146b956d7c156dbb92, type: 2}
+  - {fileID: 2100000, guid: 8606a2d3df2bf1542bf54a0c7db2bd29, type: 2}
+  - {fileID: 2100000, guid: c82e2fe0a8f0f9c48afec568472bd3b4, type: 2}
+  - {fileID: 2100000, guid: a3042dd56120d3a4895e45ea4b8dedb3, type: 2}
+  - {fileID: 2100000, guid: 0838953598e6cf641b7194754c918af4, type: 2}
+  - {fileID: 2100000, guid: cbbfcccc25dc2274db8f5d639e9607d2, type: 2}
 --- !u!61 &464862359234045615
 BoxCollider2D:
   m_ObjectHideFlags: 0
