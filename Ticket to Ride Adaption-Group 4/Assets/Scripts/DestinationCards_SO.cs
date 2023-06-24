@@ -35,7 +35,7 @@ public class DestinationCards_SO : ScriptableObject
         Helena,
         Houston,
         Kansas_City,
-        Los_Vegas,
+        Las_Vegas,
         Little_Rock,
         Los_Angeles,
         Miami,
