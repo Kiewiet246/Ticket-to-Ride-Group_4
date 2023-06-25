@@ -198,7 +198,13 @@ public class GameManager : MonoBehaviour
 
     public void BuildingButton()
     {
-        PickingCardsPanel.SetActive(true);
+       if (CurrentPlayer.BusyWithAction == false &&
+            CurrentPlayer.ActionTaken   == false)
+        {
+            PickingCardsPanel.SetActive(true);
+        }
+        
+       
     }
 
     public void PressCancel()
