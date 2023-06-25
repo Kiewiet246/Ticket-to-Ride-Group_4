@@ -18,7 +18,7 @@ public class CardManager : MonoBehaviour
     [SerializeField]
     public List<TrainCard_SO> DeckofTrainCards_list; // This list will be the deck of train cards.
     [SerializeField]
-    List<TrainCard_SO> Discardpile_TrainCards_list; // The discard pile.
+    public List<TrainCard_SO> Discardpile_TrainCards_list; // The discard pile.
 
 
     [SerializeField]
@@ -47,7 +47,7 @@ public class CardManager : MonoBehaviour
     [SerializeField]
     private GameManager gameManager_CardM;
 
-  
+   
     
     
 
@@ -67,9 +67,10 @@ public class CardManager : MonoBehaviour
       
     }
 
-    public void Update()
+    public void Start()
     {
-        
+        PlayerOne.PlayerName = "Player One";
+        PlayerTwo.PlayerName = "Player Two";
     }
 
     public void CreateDeck()

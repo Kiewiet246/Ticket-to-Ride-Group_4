@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 
 [Serializable]
-public class PlayerHand_UI : MonoBehaviour
+public class PlayerHand_UI : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField]
     private Text TextofAmoount;
+   
 
     [SerializeField]
     private int AmountOfCards;
@@ -31,7 +33,7 @@ public class PlayerHand_UI : MonoBehaviour
     void Update()
     {
         TextofAmoount.text = AmountOfCards.ToString();
-
+        
        
 
         
@@ -64,5 +66,19 @@ public class PlayerHand_UI : MonoBehaviour
         //    this.gameObject.SetActive(false);
         //}
 
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        //throw new NotImplementedException();
+
+        if (gameManager.GoingToBuild == true &&
+            AmountOfCards > 0 &&
+            gameManager.PickingCardsPanel.activeSelf == true &&
+            gameManager.ConfirmButton.activeSelf == false)
+        {
+            gameManager.CardClicked = this.gameObject.GetComponent<UI_TrainCardsInfo>();
+            gameManager.AddCardToSelectedList();
+        }
     }
 }

@@ -46,9 +46,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e18e18b21c122044a1d50713c8af438, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Destination_1: 28
-  Destination_2: 26
-  RouteColour: 9
+  Destination_1: 33
+  Destination_2: 31
+  RouteColour: 8
   RequiredAmountofTrains: 1
   TwinRoad: {fileID: 0}
   HasTwin: 1
@@ -62,6 +62,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: a3042dd56120d3a4895e45ea4b8dedb3, type: 2}
   - {fileID: 2100000, guid: 0838953598e6cf641b7194754c918af4, type: 2}
   - {fileID: 2100000, guid: cbbfcccc25dc2274db8f5d639e9607d2, type: 2}
+  gameManager: {fileID: 0}
 --- !u!61 &464862359234045615
 BoxCollider2D:
   m_ObjectHideFlags: 0

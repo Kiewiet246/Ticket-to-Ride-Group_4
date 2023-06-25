@@ -26,4 +26,11 @@ public class PlayerHand
 
     [SerializeField]
     public int PlayerScore = 0; // The player's score
+
+    [SerializeField]
+    public string PlayerName;
+
+
+    [SerializeField]
+    public List<TrainCard_SO> SelectedTrainCards;
 }

@@ -28,15 +28,52 @@ public class RoutesScript : MonoBehaviour, IPointerClickHandler
 
     [SerializeField]
     private Material[] material;
+    
+   
 
     private Renderer Rend;
 
+    [SerializeField]
+    GameManager gameManager;
+
+    [SerializeField]
+    public bool Owned = false;
+
+    [SerializeField]
+    public PlayerHand Owner;
+    
 
     public void OnPointerClick(PointerEventData eventData)
     {
         //throw new NotImplementedException();
-        Debug.Log(Destination_1);
-        Debug.Log(Destination_2);
+        //  Debug.Log(Destination_1);
+        //  Debug.Log(Destination_2);
+
+       if (HasTwin == true)
+        {
+            if (gameManager.CurrentPlayer.ActionTaken == false &&
+           gameManager.CurrentPlayer.BusyWithAction == false &&
+           Owned == false &&
+           TwinRoad.GetComponent<RoutesScript>().Owner.PlayerName != gameManager.CurrentPlayer.PlayerName)
+            {
+                gameManager.roadToBuild = this.gameObject.GetComponent<RoutesScript>();
+                Debug.Log(gameManager.roadToBuild);
+                gameManager.SetButtonActive();
+            }
+        }
+
+        else
+        {
+            if (gameManager.CurrentPlayer.ActionTaken == false &&
+           gameManager.CurrentPlayer.BusyWithAction == false &&
+           Owned == false)
+            {
+                gameManager.roadToBuild = this.gameObject.GetComponent<RoutesScript>();
+                Debug.Log(gameManager.roadToBuild);
+                gameManager.SetButtonActive();
+            }
+        }
+
     }
 
 
@@ -51,7 +88,34 @@ public class RoutesScript : MonoBehaviour, IPointerClickHandler
             
         }
 
-
         
+    }
+
+
+    public void ApplyPlayerColour()
+    {
+        if (Owner.PlayerName == "Player One")
+        {
+            for (int i = 0; i < this.transform.childCount; i++)
+            {
+                Transform child = transform.GetChild(i);
+                Rend = child.gameObject.GetComponent<Renderer>();
+                Rend.enabled = true;
+                Rend.sharedMaterial = gameManager.PlayerOne;
+
+            }
+        }
+
+        else if (Owner.PlayerName == "Player Two")
+        {
+            for (int i = 0; i < this.transform.childCount; i++)
+            {
+                Transform child = transform.GetChild(i);
+                Rend = child.gameObject.GetComponent<Renderer>();
+                Rend.enabled = true;
+                Rend.sharedMaterial = gameManager.PlayerTwo;
+
+            }
+        }
     }
 }

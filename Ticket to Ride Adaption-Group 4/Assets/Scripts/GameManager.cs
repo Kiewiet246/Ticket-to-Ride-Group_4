@@ -30,6 +30,27 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject NextPlayerButton;
 
+    public RoutesScript roadToBuild;
+
+    [SerializeField]
+    public GameObject BuildButton;
+    [SerializeField]
+    public GameObject PickingCardsPanel;
+    [SerializeField]
+    private Transform SelectedCardsParent;
+    [SerializeField]
+    public GameObject ConfirmButton;
+
+    public bool GoingToBuild = false;
+    TrainCard_SO SelectedTC;
+    [SerializeField]
+    private GameObject Prefab_TC;
+
+    [SerializeField]
+    public Material PlayerOne;
+    [SerializeField]
+    public Material PlayerTwo;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,7 +63,18 @@ public class GameManager : MonoBehaviour
     {
         CurrentPlayer = players[CurrentPlayerNumber];
 
+        if (GoingToBuild == true)
+        {
+            if (CurrentPlayer.SelectedTrainCards.Count == roadToBuild.RequiredAmountofTrains)
+            {
+                ConfirmButton.SetActive(true);
+            }
+        }
 
+        if (CurrentPlayer.ActionTaken == true)
+        {
+            NextPlayerButton.SetActive(true);
+        }
         
     }
 
@@ -147,6 +179,180 @@ public class GameManager : MonoBehaviour
 
              CheckLoco.GetComponent<UI_TrainCardsInfo>().CanPickUpAgain = true; //Resets the market cards to be picked up again.
            
+        }
+
+        Debug.Log(CurrentPlayer.PlayerName);
+    }
+
+
+
+
+
+    // Claiming a route
+
+    public void SetButtonActive()
+    {
+        BuildButton.SetActive(true);
+        GoingToBuild = true;
+    }
+
+    public void BuildingButton()
+    {
+        PickingCardsPanel.SetActive(true);
+    }
+
+    public void PressCancel()
+    {
+        int Count = CurrentPlayer.SelectedTrainCards.Count;
+        
+        if (CurrentPlayer.SelectedTrainCards.Count != 0)
+        {
+            for (int i = 0; i < Count; i++)
+            {
+                TrainCard_SO PlaceCardBack = CurrentPlayer.SelectedTrainCards[0];
+                CurrentPlayer.SelectedTrainCards.Remove(PlaceCardBack);
+                CurrentPlayer.TrainCardsInHand.Add(PlaceCardBack);
+            }
+
+            for (int i = 0; i < Count; i++)
+            {
+                Destroy(SelectedCardsParent.gameObject.transform.GetChild(i).gameObject);
+              
+            }
+
+        }
+
+        PickingCardsPanel.SetActive(false);
+        ConfirmButton.SetActive(false);
+        GoingToBuild = false;
+    }
+
+    public void AddCardToSelectedList()
+    {
+
+        SelectedTC = CardClicked.TrainCard;
+
+        if (roadToBuild.RouteColour == TrainCard_SO.TypesOfTrainCards.None)
+        {
+            if (CurrentPlayer.SelectedTrainCards.Count == 0)
+            {
+                
+                CurrentPlayer.SelectedTrainCards.Add(SelectedTC);
+                CurrentPlayer.TrainCardsInHand.Remove(SelectedTC);
+                SelectedCardsDisplay();
+            }
+
+            else
+            {
+                if (SelectedTC == CurrentPlayer.SelectedTrainCards[0] ||
+                    SelectedTC.trainCardsType == TrainCard_SO.TypesOfTrainCards.Locomotives)
+                {
+                    CurrentPlayer.SelectedTrainCards.Add(SelectedTC);
+                    CurrentPlayer.TrainCardsInHand.Remove(SelectedTC);
+                    SelectedCardsDisplay();
+                }
+            }
+        }
+
+        else
+        {
+            if (SelectedTC.trainCardsType == roadToBuild.RouteColour ||
+                SelectedTC.trainCardsType == TrainCard_SO.TypesOfTrainCards.Locomotives)
+            {
+                CurrentPlayer.SelectedTrainCards.Add(SelectedTC);
+                CurrentPlayer.TrainCardsInHand.Remove(SelectedTC);
+                SelectedCardsDisplay();
+            }
+        }
+        
+    }
+
+    public void SelectedCardsDisplay()
+    {
+        Prefab_TC.GetComponent<UI_TrainCardsInfo>().TrainCard = SelectedTC;
+        Instantiate(Prefab_TC, SelectedCardsParent);
+    }
+
+    public void PressinConfirmButton()
+    {
+        CurrentPlayer.WoodenTrains -= roadToBuild.RequiredAmountofTrains;
+            
+            if (CurrentPlayer.WoodenTrains >= 0)
+        {
+            int Count = CurrentPlayer.SelectedTrainCards.Count;
+
+            for (int i = 0; i < Count; i++)
+            {
+                TrainCard_SO PlaceInDiscard = CurrentPlayer.SelectedTrainCards[0];
+                CurrentPlayer.SelectedTrainCards.Remove(PlaceInDiscard);
+                cardManager.Discardpile_TrainCards_list.Add(PlaceInDiscard);
+
+            }
+
+            
+
+            for (int i = 0; i < Count; i++)
+            {
+                Destroy(SelectedCardsParent.gameObject.transform.GetChild(i).gameObject);
+
+            }
+
+            roadToBuild.Owned = true;
+            roadToBuild.Owner.PlayerName = CurrentPlayer.PlayerName;
+            roadToBuild.ApplyPlayerColour();
+
+            switch (roadToBuild.RequiredAmountofTrains)
+            {
+                case 1:
+                    {
+                        CurrentPlayer.PlayerScore += 1;
+                        break;
+                    }
+
+                case 2:
+                    {
+                        CurrentPlayer.PlayerScore += 2;
+                        break;
+                    }
+
+                case 3:
+                    {
+                        CurrentPlayer.PlayerScore += 4;
+                        break;
+                    }
+
+                case 4:
+                    {
+                        CurrentPlayer.PlayerScore += 7;
+                        break;
+                    }
+
+                case 5:
+                    {
+                        CurrentPlayer.PlayerScore += 10;
+                        break;
+                    }
+
+                case 6:
+                    {
+                        CurrentPlayer.PlayerScore += 15;
+                        break;
+                    }
+
+                    
+            }
+
+            PickingCardsPanel.SetActive(false);
+            ConfirmButton.SetActive(false);
+            GoingToBuild = false;
+            CurrentPlayer.ActionTaken = true;
+            BuildButton.SetActive(false);
+        }
+
+            else
+        {
+            CurrentPlayer.WoodenTrains += roadToBuild.RequiredAmountofTrains;
+            Debug.Log("Can't afford");
         }
     }
 }
