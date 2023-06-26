@@ -3,18 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using UnityEditor;
+using Unity.VisualScripting;
 
 
 // Will control the actions the players can take.
 [Serializable]
 public class GameManager : MonoBehaviour
 {
-    public CardManager cardManager; 
+    public CardManager cardManager;
     public PlayerHand CurrentPlayer;
 
-   [SerializeField]
+    [SerializeField]
     private int CurrentPlayerNumber = 0;  // Used to show which player's turn it is.  
-    
+
 
     private int CardspickedUp = 0; // Used in the pick up train cards action to keep track how many cards the player has picked.
 
@@ -80,6 +82,14 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Text PlayerTwoScore;
 
+   // [SerializeField] public List<DestinationCards_SO> PickedUpDesCards;
+    [SerializeField] private GameObject Prefab_DestinationCard;
+    [SerializeField] private Transform PickUpDesCardsParent;
+    [SerializeField] private GameObject DCParent;
+    private GameObject InstantiateThisObject;
+
+    [SerializeField] public Transform parentViewDesCards;
+
 
     // Start is called before the first frame update
     void Start()
@@ -87,14 +97,15 @@ public class GameManager : MonoBehaviour
         players.Add(cardManager.PlayerOne);   //Adds player's to the player's list
         players.Add(cardManager.PlayerTwo);
         CurrentPlayer = players[CurrentPlayerNumber];
+
     }
 
     // Update is called once per frame
     void Update()
     {
-       // CurrentPlayer = players[CurrentPlayerNumber];
+        // CurrentPlayer = players[CurrentPlayerNumber];
 
-        ThisPlayerTurn.text = "Turn: " +CurrentPlayer.PlayerName;
+        ThisPlayerTurn.text = "Turn: " + CurrentPlayer.PlayerName;
 
         if (GoingToBuild == true)
         {
@@ -112,25 +123,26 @@ public class GameManager : MonoBehaviour
 
         if (CurrentPlayer.PlayerName == "Player One")
         {
-           
-            
-                Rend = PlayerBackGround.gameObject.GetComponent<Renderer>();
-                Rend.enabled = true;
-                Rend.sharedMaterial = PlayerOne;
 
-            
+
+            Rend = PlayerBackGround.gameObject.GetComponent<Renderer>();
+            Rend.enabled = true;
+            Rend.sharedMaterial = PlayerOne;
+
+
         }
 
         else if (CurrentPlayer.PlayerName == "Player Two")
         {
-            
-                
-                Rend = PlayerBackGround.gameObject.GetComponent<Renderer>();
-                Rend.enabled = true;
-                Rend.sharedMaterial = PlayerTwo;
 
-            
+
+            Rend = PlayerBackGround.gameObject.GetComponent<Renderer>();
+            Rend.enabled = true;
+            Rend.sharedMaterial = PlayerTwo;
+
+
         }
+
 
     }
 
@@ -143,7 +155,7 @@ public class GameManager : MonoBehaviour
             TrainCard_SO topcard = cardManager.DeckofTrainCards_list[0];  // Sets topcard equal to card in the 0-position in DeckofTrainCards-list.
             cardManager.DeckofTrainCards_list.Remove(topcard); //Removes topcard from DeckofTrainCards-list
             CurrentPlayer.TrainCardsInHand.Add(topcard);  //Adds topcard to player's hand.
-            CardspickedUp += 1;  
+            CardspickedUp += 1;
         }
         for (int i = 0; i < OpenMarket.childCount; i++)  // Checks to se if there are any locomotive cards in the open market.
         {
@@ -175,8 +187,8 @@ public class GameManager : MonoBehaviour
             CurrentPlayer.ActionTaken == false) // Checks if player can pick up.
         {
 
-           
-           
+
+
             cardManager.openMarket_list.Remove(cardManager.openMarket_list[PositionInHierarchy]); // Removes the card from the open market list based on the position of the child under openMarket transform.
 
 
@@ -208,7 +220,7 @@ public class GameManager : MonoBehaviour
             Debug.Log(CurrentPlayer.ActionTaken + " End");
         }
 
-     }
+    }
 
     public void NextPlayer()  //Function called when NextPlayerturn is clicked.
     {
@@ -281,7 +293,7 @@ public class GameManager : MonoBehaviour
                 {
                     WinScreen.SetActive(true);
                     PlayerWon.text = players[0].PlayerName + " Won!!!";
-                    PlayerOneScore.text = "Player-One Score: "+ players[0].PlayerScore.ToString();
+                    PlayerOneScore.text = "Player-One Score: " + players[0].PlayerScore.ToString();
                     PlayerTwoScore.text = "Player_Two Score: " + players[1].PlayerScore.ToString();
 
                 }
@@ -320,15 +332,15 @@ public class GameManager : MonoBehaviour
 
         CurrentPlayer = players[CurrentPlayerNumber];
         Debug.Log(CurrentPlayer.PlayerName);
-    }   
-        
-        
-        
-        
-        
-        
-        
-       
+    }
+
+
+
+
+
+
+
+
 
 
 
@@ -344,8 +356,8 @@ public class GameManager : MonoBehaviour
 
     public void BuildingButton()
     {
-       if (CurrentPlayer.BusyWithAction == false &&
-            CurrentPlayer.ActionTaken   == false)
+        if (CurrentPlayer.BusyWithAction == false &&
+             CurrentPlayer.ActionTaken == false)
         {
             PickingCardsPanel.SetActive(true);
         }
@@ -353,14 +365,14 @@ public class GameManager : MonoBehaviour
         Dest_1.text = "Destination 1: " + roadToBuild.Destination_1.ToString();
         Dest_2.text = "Destination 2: " + roadToBuild.Destination_2.ToString();
         AmountRequired.text = "Required amount of Cards: " + roadToBuild.RequiredAmountofTrains.ToString();
-         
+
         switch (roadToBuild.RouteColour)
         {
             case TrainCard_SO.TypesOfTrainCards.Box:
-            {
-                Routecolour.text ="Colour of cards: Pink";
-                break;
-            }
+                {
+                    Routecolour.text = "Colour of cards: Pink";
+                    break;
+                }
 
             case TrainCard_SO.TypesOfTrainCards.Caboose:
                 {
@@ -410,14 +422,14 @@ public class GameManager : MonoBehaviour
                     break;
                 }
         }
-        
-       
+
+
     }
 
     public void PressCancel()
     {
         int Count = CurrentPlayer.SelectedTrainCards.Count;
-        
+
         if (CurrentPlayer.SelectedTrainCards.Count != 0)
         {
             for (int i = 0; i < Count; i++)
@@ -430,7 +442,7 @@ public class GameManager : MonoBehaviour
             for (int i = 0; i < Count; i++)
             {
                 Destroy(SelectedCardsParent.gameObject.transform.GetChild(i).gameObject);
-              
+
             }
 
         }
@@ -449,7 +461,7 @@ public class GameManager : MonoBehaviour
         {
             if (CurrentPlayer.SelectedTrainCards.Count == 0)
             {
-                
+
                 CurrentPlayer.SelectedTrainCards.Add(SelectedTC);
                 CurrentPlayer.TrainCardsInHand.Remove(SelectedTC);
                 SelectedCardsDisplay();
@@ -477,7 +489,7 @@ public class GameManager : MonoBehaviour
                 SelectedCardsDisplay();
             }
         }
-        
+
     }
 
     public void SelectedCardsDisplay()
@@ -489,8 +501,8 @@ public class GameManager : MonoBehaviour
     public void PressinConfirmButton()
     {
         CurrentPlayer.WoodenTrains -= roadToBuild.RequiredAmountofTrains;
-            
-            if (CurrentPlayer.WoodenTrains >= 0)
+
+        if (CurrentPlayer.WoodenTrains >= 0)
         {
             int Count = CurrentPlayer.SelectedTrainCards.Count;
 
@@ -502,7 +514,7 @@ public class GameManager : MonoBehaviour
 
             }
 
-            
+
 
             for (int i = 0; i < Count; i++)
             {
@@ -553,7 +565,7 @@ public class GameManager : MonoBehaviour
                         break;
                     }
 
-                    
+
             }
 
             PickingCardsPanel.SetActive(false);
@@ -563,10 +575,108 @@ public class GameManager : MonoBehaviour
             BuildButton.SetActive(false);
         }
 
-            else
+        else
         {
             CurrentPlayer.WoodenTrains += roadToBuild.RequiredAmountofTrains;
             Debug.Log("Can't afford");
+        }
+    }
+    //Picking Up Destination Cards
+    public void PickingUpDestinationCards()
+    {
+
+        if (CurrentPlayer.ActionTaken == false &&
+            CurrentPlayer.BusyWithAction == false)
+        {
+
+
+            // CurrentPlayer.BusyWithAction = true;
+            for (int i = 0; i < 3; i++)
+            {
+                DestinationCards_SO topcard = cardManager.DestCardsDeck[0];
+                cardManager.DestCardsDeck.Remove(topcard);
+                CurrentPlayer.PickedUpDesCards.Add(topcard);
+
+            }
+            if (CurrentPlayer.PickedUpDesCards.Count > 0)
+            {
+                
+                SelectingDesCards();
+            }
+
+        }
+
+    }
+    // Selecting Destination Cards
+    public void SelectingDesCards()
+    {
+        DCParent.SetActive(true);
+
+        for (int i = 0; i < CurrentPlayer.PickedUpDesCards.Count; i++)
+        {
+            Prefab_DestinationCard.GetComponent<DestinationCards_UI>().desCard = CurrentPlayer.PickedUpDesCards[i];
+            InstantiateThisObject = Prefab_DestinationCard;
+            InstantiateThisObject = Instantiate(Prefab_DestinationCard, PickUpDesCardsParent);
+
+            InstantiateThisObject.AddComponent<DestinationCard_Clickable>();
+            InstantiateThisObject.GetComponent<DestinationCard_Clickable>().gameManager = cardManager.gameManager_CardM;
+
+
+
+
+        }
+
+    }
+
+    public void ConfirmDC()
+    {
+        int count = CurrentPlayer.PickedUpDesCards.Count;
+
+        for (int i = 0; i < count; i++)
+        {
+            DestinationCards_SO DC = CurrentPlayer.PickedUpDesCards[0];
+            CurrentPlayer.destinationCardsInHand.Add(DC);
+            CurrentPlayer.PickedUpDesCards.Remove(DC);
+
+        }
+
+        for (int i = 0; i < PickUpDesCardsParent.childCount; i++)
+        {
+            Transform DestroyObject = PickUpDesCardsParent.GetChild(i);
+            Destroy(DestroyObject.gameObject);
+        }
+
+        DCParent.SetActive(false);
+        CurrentPlayer.ActionTaken = true;
+        CurrentPlayer.HasSelectedDCSetup = true;
+    }
+
+    public void ViewingDesCards()
+    {
+        for (int i = 0; i < parentViewDesCards.childCount; i++)
+        {
+            Transform DestroyObject = parentViewDesCards.GetChild(i);
+            Destroy(DestroyObject.gameObject);
+        }
+
+
+        parentViewDesCards.gameObject.SetActive(true);
+       
+        for (int i = 0; i < CurrentPlayer.destinationCardsInHand.Count; i++)
+        {
+            Prefab_DestinationCard.GetComponent<DestinationCards_UI>().desCard = CurrentPlayer.destinationCardsInHand[i];
+            InstantiateThisObject = Prefab_DestinationCard;
+            InstantiateThisObject = Instantiate(Prefab_DestinationCard,parentViewDesCards);
+            
+        }
+    }
+
+    public void StartTurn()
+    {
+        if (CurrentPlayer.HasSelectedDCSetup == false)
+        {
+           
+            SelectingDesCards();
         }
     }
 }

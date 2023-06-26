@@ -36,4 +36,9 @@ public class PlayerHand
 
     [SerializeField]
     public bool LastTurnPlayed = false;
+
+    [SerializeField]
+    public List<DestinationCards_SO> PickedUpDesCards;
+
+    public bool HasSelectedDCSetup = false;
 }

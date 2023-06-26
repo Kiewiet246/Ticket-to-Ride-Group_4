@@ -20,8 +20,5 @@ public class CityNames : MonoBehaviour, IPointerClickHandler
         Debug.Log(City);
     }
 
-    public void Start()
-    {
-        Cityname.text = City.ToString();
-    }
+
 }

@@ -45,7 +45,7 @@ public class CardManager : MonoBehaviour
    // [SerializeField]
     // MarketCardClickable cardClickable;
     [SerializeField]
-    private GameManager gameManager_CardM;
+    public GameManager gameManager_CardM;
 
    
     
@@ -320,20 +320,20 @@ public class CardManager : MonoBehaviour
 
     private void DealDC()
     {
-        PlayerOne.destinationCardsInHand = new List<DestinationCards_SO>();
+        PlayerOne.PickedUpDesCards = new List<DestinationCards_SO>();
 
         for (int i = 0; i < 3; i++)
         {
             DestinationCards_SO TopcardDC = DestCardsDeck[0];
             DestCardsDeck.Remove(TopcardDC);
-            PlayerOne.destinationCardsInHand.Add(TopcardDC);
+            PlayerOne.PickedUpDesCards.Add(TopcardDC);
         }
 
         for (int i = 0; i < 3; i++)
         {
             DestinationCards_SO TopcardDC = DestCardsDeck[0];
             DestCardsDeck.Remove(TopcardDC);
-            PlayerTwo.destinationCardsInHand.Add(TopcardDC);
+            PlayerTwo.PickedUpDesCards.Add(TopcardDC);
         }
     }
 }
