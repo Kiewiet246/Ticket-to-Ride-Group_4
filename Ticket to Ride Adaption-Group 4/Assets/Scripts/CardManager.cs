@@ -241,7 +241,7 @@ public class CardManager : MonoBehaviour
 
             InstantiateThisObject.AddComponent<MarketCardClickable>();
             InstantiateThisObject.GetComponent<MarketCardClickable>().gameManager_Clickable = gameManager_CardM;
-            Debug.Log(InstantiateThisObject.GetComponent<UI_TrainCardsInfo>().TrainCard.CardName + " card under OMparent");
+           
 
             foreach (Transform OMchild in OMparent)
             {
@@ -303,7 +303,7 @@ public class CardManager : MonoBehaviour
             
             CountLoco = 0;
 
-            Debug.Log("Restock");
+            
             OpenMarket();
         }
         

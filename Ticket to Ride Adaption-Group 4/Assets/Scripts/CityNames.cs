@@ -17,7 +17,7 @@ public class CityNames : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         // throw new NotImplementedException();
-        Debug.Log(City);
+      
     }
 
 

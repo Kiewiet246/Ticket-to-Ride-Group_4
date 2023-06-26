@@ -26,7 +26,7 @@ public class PlayerHand_UI : MonoBehaviour, IPointerClickHandler
     {
         trainCard = this.gameObject.transform.GetComponent<UI_TrainCardsInfo>().TrainCard;
 
-        Debug.Log(trainCard);
+        
     }
 
     // Update is called once per frame
@@ -61,10 +61,6 @@ public class PlayerHand_UI : MonoBehaviour, IPointerClickHandler
         }
        
         
-        //if (AmountOfCards == 0)
-     //   {
-        //    this.gameObject.SetActive(false);
-        //}
 
     }
 

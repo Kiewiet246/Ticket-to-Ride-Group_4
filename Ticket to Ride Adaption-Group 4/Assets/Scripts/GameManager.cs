@@ -209,7 +209,7 @@ public class GameManager : MonoBehaviour
             if (CardspickedUp == 2)  // if statement to check if the player has picked up the maximum amount of cards.
             {
                 CurrentPlayer.ActionTaken = true;
-                Debug.Log("hier");
+               
 
             }
 
@@ -218,7 +218,7 @@ public class GameManager : MonoBehaviour
                 NextPlayerButton.SetActive(true);
             }
 
-            Debug.Log(CurrentPlayer.ActionTaken + " End");
+            
         }
 
     }
@@ -282,14 +282,28 @@ public class GameManager : MonoBehaviour
                     CurrentPlayerNumber = 0;
 
                 }
-                
-                
+
+                CurrentPlayer.BusyWithAction = false; //Resets bool
+                CurrentPlayer.ActionTaken = false; // Resets bool
+                CardspickedUp = 0; // Resets amount of cards picked up.
+                NextPlayerButton.SetActive(false);
+
+                for (int i = 0; i < OpenMarket.childCount; i++)
+                {
+                    Transform CheckLoco = OpenMarket.GetChild(i);
+
+                    CheckLoco.GetComponent<UI_TrainCardsInfo>().CanPickUpAgain = true; //Resets the market cards to be picked up again.
+
+                }
+
+                ClickToStartTurnPanel.SetActive(true);
+
+
                 CurrentPlayer = players[CurrentPlayerNumber];
-                Debug.Log(CurrentPlayer.PlayerName);
 
                 if (CurrentPlayer.LastTurnPlayed == true)
                 {
-                    checkDestCards.PlayerDestCards();
+                    //checkDestCards.PlayerDestCards();
 
                     if (players[0].PlayerScore > players[1].PlayerScore)
                     {
@@ -308,37 +322,25 @@ public class GameManager : MonoBehaviour
                         PlayerTwoScore.text = "Player_Two Score: " + players[1].PlayerScore.ToString();
 
                     }
+
+                    else if (players[1].PlayerScore == players[0].PlayerScore)
+                    {
+                        WinScreen.SetActive(true);
+                        PlayerWon.text = "Draw";
+                        PlayerOneScore.text = "Player-One Score: " + players[0].PlayerScore.ToString();
+                        PlayerTwoScore.text = "Player_Two Score: " + players[1].PlayerScore.ToString();
+
+                    }
                 }
+
+            }
 
            
-
-            
-
-
-            }
-
-            else if (CurrentPlayer.LastTurnPlayed == false)
-            {
-                CurrentPlayer.BusyWithAction = false; //Resets bool
-                CurrentPlayer.ActionTaken = false; // Resets bool
-                CardspickedUp = 0; // Resets amount of cards picked up.
-                NextPlayerButton.SetActive(false);
-
-                for (int i = 0; i < OpenMarket.childCount; i++)
-                {
-                    Transform CheckLoco = OpenMarket.GetChild(i);
-
-                    CheckLoco.GetComponent<UI_TrainCardsInfo>().CanPickUpAgain = true; //Resets the market cards to be picked up again.
-
-                }
-
-                ClickToStartTurnPanel.SetActive(true);
-            }
 
         }
 
         CurrentPlayer = players[CurrentPlayerNumber];
-        Debug.Log(CurrentPlayer.PlayerName);
+       
     }
 
 
@@ -585,7 +587,7 @@ public class GameManager : MonoBehaviour
         else
         {
             CurrentPlayer.WoodenTrains += roadToBuild.RequiredAmountofTrains;
-            Debug.Log("Can't afford");
+            
         }
     }
     //Picking Up Destination Cards

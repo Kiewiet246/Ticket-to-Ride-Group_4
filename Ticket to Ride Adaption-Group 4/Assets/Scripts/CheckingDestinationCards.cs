@@ -74,7 +74,7 @@ public class CheckingDestinationCards : MonoBehaviour
     
     public void CheckDestCard()
     {
-        Debug.Log(DestCard);
+       
         
         foreach (GameObject road in TestPlayer.roadsBuilt)
         {
@@ -161,7 +161,7 @@ public class CheckingDestinationCards : MonoBehaviour
                 else
                 {
                     FoundARoad = false;
-                    Debug.Log("Hi");
+                   
                     checkFromThis = road;
                     ContinueCheck();
                    
@@ -186,7 +186,7 @@ public class CheckingDestinationCards : MonoBehaviour
 
             
             TestPlayer.PlayerScore -= DestCard.PointValue;
-            Debug.Log(TestPlayer.PlayerScore);
+            
 
         }
 

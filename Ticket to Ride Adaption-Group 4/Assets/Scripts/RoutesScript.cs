@@ -69,7 +69,7 @@ public class RoutesScript : MonoBehaviour, IPointerClickHandler
            Owned == false)
             {
                 gameManager.roadToBuild = this.gameObject.GetComponent<RoutesScript>();
-                Debug.Log(gameManager.roadToBuild);
+                
                 gameManager.SetButtonActive();
             }
         }
