@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Denver_Pittsburgh
   m_EditorClassIdentifier: 
   destinationA: 5
-  destinationsB: 20
+  destinationB: 23
   PointValue: 11

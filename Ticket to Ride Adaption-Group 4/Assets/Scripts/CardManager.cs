@@ -95,6 +95,14 @@ public class CardManager : MonoBehaviour
       
     }
 
+    public void Update()
+    {
+         if (DeckofTrainCards_list.Count <= 5)
+        {
+
+        }
+    }
+
     public void ShuffleTrainCards()
     {
         int Length = DeckofTrainCards_list.Count;
@@ -137,7 +145,18 @@ public class CardManager : MonoBehaviour
         }
     }
     
-    
+    public void RefillTCDeck()
+    {
+        int Count = Discardpile_TrainCards_list.Count;
+
+        for (int i = 0; i < Count; i++)
+        {
+           TrainCard_SO PlaceBack = Discardpile_TrainCards_list[0];
+            Discardpile_TrainCards_list.Remove(PlaceBack);
+            DeckofTrainCards_list.Add(PlaceBack);
+
+        }
+    }
     
     
     
@@ -166,68 +185,58 @@ public class CardManager : MonoBehaviour
 
     public void RefillMarket()
     {
-        Debug.Log(DeckofTrainCards_list[0] + " Topcard");
-        
-
+      
+        if (DeckofTrainCards_list.Count > 0)
+        {
             TrainCard_SO topCard = DeckofTrainCards_list[0];
-        DeckofTrainCards_list.Remove(topCard);
-        
-        
-        openMarket_list.Insert(gameManager_CardM.PositionInHierarchy, topCard);
+            DeckofTrainCards_list.Remove(topCard);
 
-       
 
-        Prefab_TC_UI.GetComponent<UI_TrainCardsInfo>().TrainCard = topCard;
-        InstantiateThisObject = Prefab_TC_UI;
-       InstantiateThisObject = Instantiate(Prefab_TC_UI, OMparent);
-        InstantiateThisObject.gameObject.transform.SetSiblingIndex(gameManager_CardM.PositionInHierarchy);
-        
-        InstantiateThisObject.AddComponent<MarketCardClickable>();
-        InstantiateThisObject.GetComponent<MarketCardClickable>().gameManager_Clickable = gameManager_CardM;
-        Debug.Log(InstantiateThisObject.GetComponent<UI_TrainCardsInfo>().TrainCard.CardName + " card under OMparent");
-        
-        foreach (Transform OMchild in OMparent)
-        {
-            OMchild.GetComponent<UI_TrainCardsInfo>().TrainCard = openMarket_list[OMchild.GetSiblingIndex()];
-        }
+            openMarket_list.Insert(gameManager_CardM.PositionInHierarchy, topCard);
 
 
 
+            Prefab_TC_UI.GetComponent<UI_TrainCardsInfo>().TrainCard = topCard;
+            InstantiateThisObject = Prefab_TC_UI;
+            InstantiateThisObject = Instantiate(Prefab_TC_UI, OMparent);
+            InstantiateThisObject.gameObject.transform.SetSiblingIndex(gameManager_CardM.PositionInHierarchy);
 
-        if (topCard.trainCardsType == TrainCard_SO.TypesOfTrainCards.Locomotives)
-        {
-            InstantiateThisObject.GetComponent<UI_TrainCardsInfo>().CanPickUpAgain = false;
-        }
-         
-        
-        else if (topCard.trainCardsType != TrainCard_SO.TypesOfTrainCards.Locomotives)
-        {
-           
+            InstantiateThisObject.AddComponent<MarketCardClickable>();
+            InstantiateThisObject.GetComponent<MarketCardClickable>().gameManager_Clickable = gameManager_CardM;
+            Debug.Log(InstantiateThisObject.GetComponent<UI_TrainCardsInfo>().TrainCard.CardName + " card under OMparent");
+
             foreach (Transform OMchild in OMparent)
             {
-                if (OMchild.GetComponent<UI_TrainCardsInfo>().TrainCard.trainCardsType == TrainCard_SO.TypesOfTrainCards.Locomotives)
-                {
-                    OMchild.GetComponent<UI_TrainCardsInfo>().CanPickUpAgain = false;
-                }
+                OMchild.GetComponent<UI_TrainCardsInfo>().TrainCard = openMarket_list[OMchild.GetSiblingIndex()];
             }
 
-            //for (int i = 0; i < OMparent.childCount; i++)
-            //{
 
 
 
-            //  Transform CheckLoco = OMparent.GetChild(i);
-            //   Debug.Log("Checking " + CheckLoco.GetComponent<UI_TrainCardsInfo>().TrainCard.CardName + " " + i);
-            //  Debug.Log(openMarket_list[i] + "After CheckLoco");
+            if (topCard.trainCardsType == TrainCard_SO.TypesOfTrainCards.Locomotives)
+            {
+                InstantiateThisObject.GetComponent<UI_TrainCardsInfo>().CanPickUpAgain = false;
+            }
 
-            //  if (CheckLoco.GetComponent<UI_TrainCardsInfo>().TrainCard.trainCardsType == TrainCard_SO.TypesOfTrainCards.Locomotives)
-            //  {
-            //  CheckLoco.GetComponent<UI_TrainCardsInfo>().CanPickUpAgain = false;
-            //}
-            // }
+
+            else if (topCard.trainCardsType != TrainCard_SO.TypesOfTrainCards.Locomotives)
+            {
+
+                foreach (Transform OMchild in OMparent)
+                {
+                    if (OMchild.GetComponent<UI_TrainCardsInfo>().TrainCard.trainCardsType == TrainCard_SO.TypesOfTrainCards.Locomotives)
+                    {
+                        OMchild.GetComponent<UI_TrainCardsInfo>().CanPickUpAgain = false;
+                    }
+                }
+
+
+            }
+
+            CheckingMarket();
         }
 
-        CheckingMarket();
+          
     }
 
     
@@ -269,9 +278,9 @@ public class CardManager : MonoBehaviour
 
     public void ClearingOpenMarket()
     {
-       
+        int Count = openMarket_list.Count; 
         
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < Count; i++)
         {
             TrainCard_SO FirstCard = openMarket_list[0];
             openMarket_list.Remove(FirstCard);

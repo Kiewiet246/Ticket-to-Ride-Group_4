@@ -40,6 +40,14 @@ public class GameManager : MonoBehaviour
     private Transform SelectedCardsParent;
     [SerializeField]
     public GameObject ConfirmButton;
+    [SerializeField]
+    private Text Dest_1;
+    [SerializeField]
+    private Text Dest_2;
+    [SerializeField]
+    private Text Routecolour;
+    [SerializeField]
+    private Text AmountRequired;
 
     public bool GoingToBuild = false;
     TrainCard_SO SelectedTC;
@@ -51,17 +59,42 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     public Material PlayerTwo;
 
+    [SerializeField]
+    private bool LastRound = false;
+
+    [SerializeField]
+    private GameObject ClickToStartTurnPanel;
+    [SerializeField]
+    private Text ThisPlayerTurn;
+    [SerializeField]
+    private Transform PlayerBackGround;
+    private Renderer Rend;
+
+    CheckingDestinationCards checkDestCards;
+    [SerializeField]
+    private GameObject WinScreen;
+    [SerializeField]
+    private Text PlayerWon;
+    [SerializeField]
+    private Text PlayerOneScore;
+    [SerializeField]
+    private Text PlayerTwoScore;
+
+
     // Start is called before the first frame update
     void Start()
     {
         players.Add(cardManager.PlayerOne);   //Adds player's to the player's list
         players.Add(cardManager.PlayerTwo);
+        CurrentPlayer = players[CurrentPlayerNumber];
     }
 
     // Update is called once per frame
     void Update()
     {
-        CurrentPlayer = players[CurrentPlayerNumber];
+       // CurrentPlayer = players[CurrentPlayerNumber];
+
+        ThisPlayerTurn.text = "Turn: " +CurrentPlayer.PlayerName;
 
         if (GoingToBuild == true)
         {
@@ -75,7 +108,30 @@ public class GameManager : MonoBehaviour
         {
             NextPlayerButton.SetActive(true);
         }
-        
+
+
+        if (CurrentPlayer.PlayerName == "Player One")
+        {
+           
+            
+                Rend = PlayerBackGround.gameObject.GetComponent<Renderer>();
+                Rend.enabled = true;
+                Rend.sharedMaterial = PlayerOne;
+
+            
+        }
+
+        else if (CurrentPlayer.PlayerName == "Player Two")
+        {
+            
+                
+                Rend = PlayerBackGround.gameObject.GetComponent<Renderer>();
+                Rend.enabled = true;
+                Rend.sharedMaterial = PlayerTwo;
+
+            
+        }
+
     }
 
 
@@ -156,33 +212,123 @@ public class GameManager : MonoBehaviour
 
     public void NextPlayer()  //Function called when NextPlayerturn is clicked.
     {
-        if (CurrentPlayerNumber == 0)
+
+        if (LastRound == false)
         {
-            CurrentPlayerNumber = 1;
-          
+            if (CurrentPlayer.WoodenTrains < 3)
+            {
+                LastRound = true;
+            }
+
+
+
+
+
+            if (CurrentPlayerNumber == 0)
+            {
+                CurrentPlayerNumber = 1;
+
+            }
+
+            else if (CurrentPlayerNumber == 1)
+            {
+                CurrentPlayerNumber = 0;
+
+            }
+
+            CurrentPlayer.BusyWithAction = false; //Resets bool
+            CurrentPlayer.ActionTaken = false; // Resets bool
+            CardspickedUp = 0; // Resets amount of cards picked up.
+            NextPlayerButton.SetActive(false);
+
+            for (int i = 0; i < OpenMarket.childCount; i++)
+            {
+                Transform CheckLoco = OpenMarket.GetChild(i);
+
+                CheckLoco.GetComponent<UI_TrainCardsInfo>().CanPickUpAgain = true; //Resets the market cards to be picked up again.
+
+            }
+
+            ClickToStartTurnPanel.SetActive(true);
         }
 
-        else if (CurrentPlayerNumber == 1)
+        else if (LastRound == true)
         {
-            CurrentPlayerNumber = 0;
-          
+            if (CurrentPlayer.LastTurnPlayed == false)
+            {
+                CurrentPlayer.LastTurnPlayed = true;
+
+                if (CurrentPlayerNumber == 0)
+                {
+                    CurrentPlayerNumber = 1;
+
+                }
+
+                else if (CurrentPlayerNumber == 1)
+                {
+                    CurrentPlayerNumber = 0;
+
+                }
+            }
+
+            CurrentPlayer = players[CurrentPlayerNumber];
+
+            if (CurrentPlayer.LastTurnPlayed == true)
+            {
+                checkDestCards.PlayerDestCards();
+
+                if (players[0].PlayerScore > players[1].PlayerScore)
+                {
+                    WinScreen.SetActive(true);
+                    PlayerWon.text = players[0].PlayerName + " Won!!!";
+                    PlayerOneScore.text = "Player-One Score: "+ players[0].PlayerScore.ToString();
+                    PlayerTwoScore.text = "Player_Two Score: " + players[1].PlayerScore.ToString();
+
+                }
+
+                else if (players[1].PlayerScore > players[0].PlayerScore)
+                {
+                    WinScreen.SetActive(true);
+                    PlayerWon.text = players[1].PlayerName + " Won!!!";
+                    PlayerOneScore.text = "Player-One Score: " + players[0].PlayerScore.ToString();
+                    PlayerTwoScore.text = "Player_Two Score: " + players[1].PlayerScore.ToString();
+
+                }
+
+
+            }
+
+            else if (CurrentPlayer.LastTurnPlayed == false)
+            {
+                CurrentPlayer.BusyWithAction = false; //Resets bool
+                CurrentPlayer.ActionTaken = false; // Resets bool
+                CardspickedUp = 0; // Resets amount of cards picked up.
+                NextPlayerButton.SetActive(false);
+
+                for (int i = 0; i < OpenMarket.childCount; i++)
+                {
+                    Transform CheckLoco = OpenMarket.GetChild(i);
+
+                    CheckLoco.GetComponent<UI_TrainCardsInfo>().CanPickUpAgain = true; //Resets the market cards to be picked up again.
+
+                }
+
+                ClickToStartTurnPanel.SetActive(true);
+            }
+
         }
 
-        CurrentPlayer.BusyWithAction = false; //Resets bool
-        CurrentPlayer.ActionTaken = false; // Resets bool
-        CardspickedUp = 0; // Resets amount of cards picked up.
-        NextPlayerButton.SetActive(false);
-
-        for (int i = 0; i < OpenMarket.childCount; i++)
-        {
-            Transform CheckLoco = OpenMarket.GetChild(i);
-
-             CheckLoco.GetComponent<UI_TrainCardsInfo>().CanPickUpAgain = true; //Resets the market cards to be picked up again.
-           
-        }
-
+        CurrentPlayer = players[CurrentPlayerNumber];
         Debug.Log(CurrentPlayer.PlayerName);
-    }
+    }   
+        
+        
+        
+        
+        
+        
+        
+       
 
 
 
@@ -202,6 +348,67 @@ public class GameManager : MonoBehaviour
             CurrentPlayer.ActionTaken   == false)
         {
             PickingCardsPanel.SetActive(true);
+        }
+
+        Dest_1.text = "Destination 1: " + roadToBuild.Destination_1.ToString();
+        Dest_2.text = "Destination 2: " + roadToBuild.Destination_2.ToString();
+        AmountRequired.text = "Required amount of Cards: " + roadToBuild.RequiredAmountofTrains.ToString();
+         
+        switch (roadToBuild.RouteColour)
+        {
+            case TrainCard_SO.TypesOfTrainCards.Box:
+            {
+                Routecolour.text ="Colour of cards: Pink";
+                break;
+            }
+
+            case TrainCard_SO.TypesOfTrainCards.Caboose:
+                {
+                    Routecolour.text = "Colour of cards: Green";
+                    break;
+                }
+
+            case TrainCard_SO.TypesOfTrainCards.Coal:
+                {
+                    Routecolour.text = "Colour of cards: Red";
+                    break;
+                }
+
+            case TrainCard_SO.TypesOfTrainCards.Freight:
+                {
+                    Routecolour.text = "Colour of cards: Orange";
+                    break;
+                }
+
+            case TrainCard_SO.TypesOfTrainCards.Hopper:
+                {
+                    Routecolour.text = "Colour of cards: Black";
+                    break;
+                }
+
+            case TrainCard_SO.TypesOfTrainCards.None:
+                {
+                    Routecolour.text = "Colour of cards: Any";
+                    break;
+                }
+
+            case TrainCard_SO.TypesOfTrainCards.Passenger:
+                {
+                    Routecolour.text = "Colour of cards: White";
+                    break;
+                }
+
+            case TrainCard_SO.TypesOfTrainCards.Reefer:
+                {
+                    Routecolour.text = "Colour of cards: Yellow";
+                    break;
+                }
+
+            case TrainCard_SO.TypesOfTrainCards.Tanker:
+                {
+                    Routecolour.text = "Colour of cards: Blue";
+                    break;
+                }
         }
         
        
@@ -306,6 +513,7 @@ public class GameManager : MonoBehaviour
             roadToBuild.Owned = true;
             roadToBuild.Owner.PlayerName = CurrentPlayer.PlayerName;
             roadToBuild.ApplyPlayerColour();
+            CurrentPlayer.roadsBuilt.Add(roadToBuild.gameObject);
 
             switch (roadToBuild.RequiredAmountofTrains)
             {

@@ -33,4 +33,7 @@ public class PlayerHand
 
     [SerializeField]
     public List<TrainCard_SO> SelectedTrainCards;
+
+    [SerializeField]
+    public bool LastTurnPlayed = false;
 }

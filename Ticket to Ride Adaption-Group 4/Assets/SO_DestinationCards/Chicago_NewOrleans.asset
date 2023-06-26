@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Chicago_NewOrleans
   m_EditorClassIdentifier: 
   destinationA: 3
-  destinationsB: 16
+  destinationB: 18
   PointValue: 7

@@ -9,7 +9,7 @@ using System;
 [Serializable]
 public class CheckingDestinationCards : MonoBehaviour
 {
-    [SerializeField]
+   [SerializeField]
     public PlayerHand TestPlayer;
 
     [SerializeField]
@@ -59,6 +59,8 @@ public class CheckingDestinationCards : MonoBehaviour
     {
         foreach (PlayerHand playerhand in gameManager.players)
         {
+            TestPlayer = playerhand;
+            
             foreach(DestinationCards_SO DesCards in playerhand.destinationCardsInHand)
             {
                 DestCard = DesCards;
@@ -83,8 +85,9 @@ public class CheckingDestinationCards : MonoBehaviour
                TestPlayer.roadsBuilt.Remove(road);
                 Followroad.Add(road);
                 checkFromThis = road;
-                ContinueCheck();
+               
                 DestinationIsPossible = true;
+                
                 break;
             }
 
@@ -95,9 +98,15 @@ public class CheckingDestinationCards : MonoBehaviour
             }
         }
 
+        
         if (DestinationIsPossible == false)
         {
             TestPlayer.PlayerScore -= DestCard.PointValue;
+        }
+
+        else if (DestinationIsPossible == true)
+        {
+            ContinueCheck();
         }
     }
 
@@ -124,13 +133,13 @@ public class CheckingDestinationCards : MonoBehaviour
                     road.gameObject.GetComponent<RoutesScript>().Destination_2 == DestCard.destinationB)
                 {
                     TestPlayer.PlayerScore += DestCard.PointValue;
-                   // Debug.Log(TestPlayer.PlayerScore + " if added");
-
+                    
+                    
                     foreach (GameObject Placeroadback in Followroad)
                     {
 
 
-                        // Followroad.Remove(Placeroadback);
+                        
                         TestPlayer.roadsBuilt.Add(Placeroadback);
                     }
 
@@ -141,10 +150,10 @@ public class CheckingDestinationCards : MonoBehaviour
                         Followroad.Remove(Followroad[i]);
                     }
 
-                    break;
+                  
                 }
 
-
+              
 
 
 
@@ -152,10 +161,10 @@ public class CheckingDestinationCards : MonoBehaviour
                 else
                 {
                     FoundARoad = false;
-                   // Debug.Log("hier");
+                    Debug.Log("Hi");
                     checkFromThis = road;
                     ContinueCheck();
-                    break;
+                   
                 }
 
             }
@@ -169,15 +178,15 @@ public class CheckingDestinationCards : MonoBehaviour
 
 
 
-       // Debug.Log(Followroad.Count + " count");
-       // Debug.Log(FoundARoad +" " + DestCard);
+     
         
         if (FoundARoad == false &&
              Followroad.Count <= 1)
         {
-          //  Debug.Log("Hi");
+
+            
             TestPlayer.PlayerScore -= DestCard.PointValue;
-            //Debug.Log(TestPlayer.PlayerScore + " if subtrackted");
+            Debug.Log(TestPlayer.PlayerScore);
 
         }
 
@@ -185,14 +194,13 @@ public class CheckingDestinationCards : MonoBehaviour
             Followroad.Count > 1)
         {
 
-          // Debug.Log("Hello");
+          
             GameObject keeptrack = checkFromThis;
             Followroad.Remove(keeptrack);
-            //TestPlayer.roadsBuilt.Add(keeptrack);
+           
             storeRoad.Add(keeptrack);
-           // Debug.Log(Followroad.Count);
             checkFromThis = Followroad[Followroad.Count - 1];
-           // FoundARoad = true;
+          
             ContinueCheck();
             
         }

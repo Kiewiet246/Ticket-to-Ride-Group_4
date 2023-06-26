@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98d04e4f752e24649b3dc04fabf38a60, type: 3}
   m_Name: "Montr\xE9al_Atlanta"
   m_EditorClassIdentifier: 
-  destinationA: 14
-  destinationsB: 0
+  destinationA: 16
+  destinationB: 0
   PointValue: 9

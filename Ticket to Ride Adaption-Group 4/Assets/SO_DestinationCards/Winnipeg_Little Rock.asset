@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98d04e4f752e24649b3dc04fabf38a60, type: 3}
   m_Name: Winnipeg_Little Rock
   m_EditorClassIdentifier: 
-  destinationA: 29
-  destinationsB: 11
+  destinationA: 35
+  destinationB: 13
   PointValue: 11

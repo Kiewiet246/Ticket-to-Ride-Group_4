@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98d04e4f752e24649b3dc04fabf38a60, type: 3}
   m_Name: Helena_Los Angeles
   m_EditorClassIdentifier: 
-  destinationA: 8
-  destinationsB: 12
+  destinationA: 9
+  destinationB: 14
   PointValue: 8

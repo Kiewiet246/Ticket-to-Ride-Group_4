@@ -54,7 +54,7 @@ public class RoutesScript : MonoBehaviour, IPointerClickHandler
             if (gameManager.CurrentPlayer.ActionTaken == false &&
            gameManager.CurrentPlayer.BusyWithAction == false &&
            Owned == false &&
-           TwinRoad.GetComponent<RoutesScript>().Owner.PlayerName != gameManager.CurrentPlayer.PlayerName)
+           TwinRoad.GetComponent<RoutesScript>().Owned == false)
             {
                 gameManager.roadToBuild = this.gameObject.GetComponent<RoutesScript>();
                 Debug.Log(gameManager.roadToBuild);

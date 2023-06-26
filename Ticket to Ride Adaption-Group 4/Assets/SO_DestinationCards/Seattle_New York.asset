@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98d04e4f752e24649b3dc04fabf38a60, type: 3}
   m_Name: Seattle_New York
   m_EditorClassIdentifier: 
-  destinationA: 26
-  destinationsB: 17
+  destinationA: 31
+  destinationB: 19
   PointValue: 22
