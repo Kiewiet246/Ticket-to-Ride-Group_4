@@ -99,7 +99,45 @@ public class CardManager : MonoBehaviour
     {
          if (DeckofTrainCards_list.Count <= 5)
         {
+            int Count = Discardpile_TrainCards_list.Count;
 
+            for (int i = 0; i< Count; i++)
+            {
+                TrainCard_SO placeBack = Discardpile_TrainCards_list[0];
+                Discardpile_TrainCards_list.Remove(placeBack);
+                DeckofTrainCards_list.Add(placeBack);
+                    
+            }
+
+            ShuffleTrainCards();
+        }
+
+         if (openMarket_list.Count < 5 &&
+            DeckofTrainCards_list.Count > 0)
+        {
+            int RequiredAmount = 5 - openMarket_list.Count;
+            
+              if (DeckofTrainCards_list.Count >= RequiredAmount)
+            {
+                for (int i = 0; i < RequiredAmount; i++)
+                {
+                    TrainCard_SO topCard = DeckofTrainCards_list[0];
+                    DeckofTrainCards_list.Remove(topCard);
+
+
+                    openMarket_list.Insert(gameManager_CardM.PositionInHierarchy, topCard);
+
+
+
+                    Prefab_TC_UI.GetComponent<UI_TrainCardsInfo>().TrainCard = topCard;
+                    InstantiateThisObject = Prefab_TC_UI;
+                    InstantiateThisObject = Instantiate(Prefab_TC_UI, OMparent);
+                    InstantiateThisObject.gameObject.transform.SetSiblingIndex(gameManager_CardM.PositionInHierarchy);
+
+                    InstantiateThisObject.AddComponent<MarketCardClickable>();
+                    InstantiateThisObject.GetComponent<MarketCardClickable>().gameManager_Clickable = gameManager_CardM;
+                }
+            }
         }
     }
 

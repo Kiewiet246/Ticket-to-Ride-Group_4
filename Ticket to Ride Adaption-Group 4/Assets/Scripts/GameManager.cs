@@ -152,6 +152,7 @@ public class GameManager : MonoBehaviour
         if (CardspickedUp < 2 &&
             CurrentPlayer.ActionTaken == false)  // Checks if player can pick up.
         {
+            CurrentPlayer.BusyWithAction = true;
             TrainCard_SO topcard = cardManager.DeckofTrainCards_list[0];  // Sets topcard equal to card in the 0-position in DeckofTrainCards-list.
             cardManager.DeckofTrainCards_list.Remove(topcard); //Removes topcard from DeckofTrainCards-list
             CurrentPlayer.TrainCardsInHand.Add(topcard);  //Adds topcard to player's hand.
@@ -222,7 +223,7 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void NextPlayer()  //Function called when NextPlayerturn is clicked.
+    public void EndTurn()  //Function called when NextPlayerturn is clicked.
     {
 
         if (LastRound == false)
@@ -281,31 +282,37 @@ public class GameManager : MonoBehaviour
                     CurrentPlayerNumber = 0;
 
                 }
-            }
+                
+                
+                CurrentPlayer = players[CurrentPlayerNumber];
+                Debug.Log(CurrentPlayer.PlayerName);
 
-            CurrentPlayer = players[CurrentPlayerNumber];
-
-            if (CurrentPlayer.LastTurnPlayed == true)
-            {
-                checkDestCards.PlayerDestCards();
-
-                if (players[0].PlayerScore > players[1].PlayerScore)
+                if (CurrentPlayer.LastTurnPlayed == true)
                 {
-                    WinScreen.SetActive(true);
-                    PlayerWon.text = players[0].PlayerName + " Won!!!";
-                    PlayerOneScore.text = "Player-One Score: " + players[0].PlayerScore.ToString();
-                    PlayerTwoScore.text = "Player_Two Score: " + players[1].PlayerScore.ToString();
+                    checkDestCards.PlayerDestCards();
 
+                    if (players[0].PlayerScore > players[1].PlayerScore)
+                    {
+                        WinScreen.SetActive(true);
+                        PlayerWon.text = players[0].PlayerName + " Won!!!";
+                        PlayerOneScore.text = "Player-One Score: " + players[0].PlayerScore.ToString();
+                        PlayerTwoScore.text = "Player_Two Score: " + players[1].PlayerScore.ToString();
+
+                    }
+
+                    else if (players[1].PlayerScore > players[0].PlayerScore)
+                    {
+                        WinScreen.SetActive(true);
+                        PlayerWon.text = players[1].PlayerName + " Won!!!";
+                        PlayerOneScore.text = "Player-One Score: " + players[0].PlayerScore.ToString();
+                        PlayerTwoScore.text = "Player_Two Score: " + players[1].PlayerScore.ToString();
+
+                    }
                 }
 
-                else if (players[1].PlayerScore > players[0].PlayerScore)
-                {
-                    WinScreen.SetActive(true);
-                    PlayerWon.text = players[1].PlayerName + " Won!!!";
-                    PlayerOneScore.text = "Player-One Score: " + players[0].PlayerScore.ToString();
-                    PlayerTwoScore.text = "Player_Two Score: " + players[1].PlayerScore.ToString();
+           
 
-                }
+            
 
 
             }
